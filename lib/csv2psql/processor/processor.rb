@@ -20,15 +20,22 @@ module Csv2Psql
     }
 
     def format_row(row, opts = {})
-      headers = row.headers.map do |h|
-        h.downcase.gsub(/\./, '_')
+      if opts[:header]
+        headers = row.headers.map do |h|
+          h.downcase.gsub(/\./, '_')
+        end
+        h_str = headers.join(', ')
+      else
+        headers = row.map.with_index { |_item, i| i}
+        h_str = headers.map do |h|
+          "col_#{h}"
+        end
       end
 
-      values = row.headers.map do |h|
+      values = headers.map do |h|
         "'#{row[h]}'"
       end
 
-      h_str = headers.join(', ')
       v_str = values.join(', ')
       "INSERT INTO #{opts[:table]}(#{h_str}) VALUES(#{v_str});"
     end

@@ -17,7 +17,7 @@ module Csv2Psql
       header: true
     }
 
-    def format_row(row)
+    def format_row(row, opts = {})
       headers = row.headers.map do |h|
         h.downcase.gsub(/\./, '_')
       end
@@ -26,12 +26,12 @@ module Csv2Psql
         "'#{row[h]}'"
       end
 
-      "INSERT INTO aaa(#{headers.join(', ')}) VALUES(#{values.join(', ')});"
+      "INSERT INTO #{opts[:table]}(#{headers.join(', ')}) VALUES(#{values.join(', ')});"
     end
 
     def convert(paths, opts = {})
       with_paths(paths, opts) do |data|
-        puts format_row(data[:row])
+        puts format_row(data[:row], opts)
       end
     end
 

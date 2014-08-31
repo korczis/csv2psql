@@ -11,6 +11,7 @@ desc 'Convert csv file'
 command :convert do |c|
   c.switch [:h, :header], desc: 'Header row included', default_value: true
   c.flag [:d, :delimiter], type: String, default_value: ','
+  c.flag [:t, :table], desc: 'Table to insert to', type: String, default_value: 'my_table'
 
   c.action do |global_options, options, args|
     fail ArgumentError, 'No file to convert specified' if args.empty?

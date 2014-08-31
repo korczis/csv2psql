@@ -2,6 +2,12 @@
 
 Tool for transforming CSV into SQL statements
 
+*Formalities*
+
+- [License](https://github.com/korczis/csv2psql/blob/master/LICENSE)
+- [To Do](https://github.com/korczis/csv2psql/blob/master/TODO.md)
+- [Issues](https://github.com/korczis/csv2psql/issues)
+
 ## Status
 
 [![Gem Version](https://badge.fury.io/rb/csv2psql.svg)](http://badge.fury.io/rb/csv2psql) 
@@ -9,6 +15,7 @@ Tool for transforming CSV into SQL statements
 [![Build Status](https://travis-ci.org/korczis/csv2psql.svg?branch=master)](https://travis-ci.org/korczis/csv2psql)
 [![Code Climate](https://codeclimate.com/github/korczis/csv2psql/badges/gpa.svg)](https://codeclimate.com/github/korczis/csv2psql)
 [![Dependency Status](https://gemnasium.com/korczis/csv2psql.svg)](https://gemnasium.com/korczis/csv2psql)
+
 
 ## Features
 

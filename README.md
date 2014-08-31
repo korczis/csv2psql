@@ -16,7 +16,7 @@ Tool for transforming CSV into SQL statements
 - Customizable (parameters can be tweaked)
 - Extendable (external modules can bring functionality)
 - Database aware
-- - SQL Dialects sensitive
+- SQL Dialects sensitive
   - Drop database
   - Create database
   - Truncate database

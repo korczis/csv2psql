@@ -56,13 +56,15 @@ SYNOPSIS
     csv2psql [global options] convert [command options]
 
 COMMAND OPTIONS
-    --[no-]create-table - Crate SQL Table before inserts
-    -d, --delimiter=arg - Column delimiter (default: ,)
-    -h, --[no-]header   - Header row included (default: enabled)
-    -q, --quote=arg     - Quoting character (default: ")
-    -s, --separator=arg - Line separator (default: auto)
-    -t, --table=arg     - Table to insert to (default: my_table)
-    --[no-]transaction  - Import in transaction block (default: enabled)
+    --[no-]create-table   - Crate SQL Table before inserts
+    -d, --delimiter=arg   - Column delimiter (default: ,)
+    --[no-]drop-table     - Drop SQL Table before inserts
+    -h, --[no-]header     - Header row included (default: enabled)
+    -q, --quote=arg       - Quoting character (default: ")
+    -s, --separator=arg   - Line separator (default: auto)
+    -t, --table=arg       - Table to insert to (default: my_table)
+    --[no-]transaction    - Import in transaction block (default: enabled)
+    --[no-]truncate-table - Truncate SQL Table before inserts
 ```
 
 ## Example
@@ -124,6 +126,33 @@ CREATE TABLE
 INSERT 0 1
 INSERT 0 1
 COMMIT
+```
+
+**Convert CSV - Full load**
+
+```
+csv2psql convert --create-table --drop-table --truncate-table -t test data/sample.csv
+
+BEGIN;
+DROP TABLE IF EXISTS test;
+
+CREATE TABLE test(
+	id TEXT,
+	firstname TEXT,
+	lastname TEXT,
+	address_street TEXT,
+	address_city TEXT,
+	address_details_note TEXT
+)
+WITH (
+  OIDS=FALSE
+);
+
+TRUNCATE test;
+
+INSERT INTO test(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
+INSERT INTO test(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
+COMMIT;
 ```
 
 ## Contributing to csv2psql

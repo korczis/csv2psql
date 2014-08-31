@@ -30,6 +30,7 @@ module Csv2Psql
         h_str = headers.map do |h|
           "col_#{h}"
         end
+        h_str = h_str.join(', ')
       end
 
       values = headers.map do |h|

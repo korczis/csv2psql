@@ -10,6 +10,16 @@ Tool for transforming CSV into SQL statements
 [![Code Climate](https://codeclimate.com/github/korczis/csv2psql/badges/gpa.svg)](https://codeclimate.com/github/korczis/csv2psql)
 [![Dependency Status](https://gemnasium.com/korczis/csv2psql.svg)](https://gemnasium.com/korczis/csv2psql)
 
+## Features
+
+- In most cases works without any need for configuration
+- Anytime can be configured and/or extended externaly 
+- Database helpers (if requested)
+  - Drop database
+  - Create database
+  - Truncate database
+- SQL Dialects sensitive
+
 ## Getting started 
 
 ```

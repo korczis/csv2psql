@@ -14,10 +14,12 @@ module Csv2Psql
     attr_reader :path
 
     DEFAULT_OPTIONS = {
+      'create-table' => false,
       delimiter: ',',
       header: true,
       separator: :auto,
       table: 'my_table',
+      transaction: true,
       quote: '"'
     }
 
@@ -109,12 +111,11 @@ module Csv2Psql
     end
 
     def with_row(path, row, opts = {}, &block)
-      args = {
-        path: path,
-        row: row
-      }
+      args = { path: path, row: row }
       if @first_row
-        puts create_table(path, row, opts)
+        ct = DEFAULT_OPTIONS['create-table']
+        ct = opts['create-table'] unless opts['create-table'].nil?
+        puts create_table(path, row, opts) if ct
         @first_row = false
       end
       block.call(args) if block_given?

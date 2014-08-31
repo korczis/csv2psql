@@ -116,10 +116,10 @@ INSERT INTO pokus(id, firstname, lastname, address_street, address_city, address
 COMMIT;
 ```
 
-**Convert CSV - Stream directly to Postgre client (psql)**
+**Convert CSV - Stream directly to Postgres client (psql)**
 
 ```
-csv2psql convert --create-table -t hokus data/sample.csv | psql -h apollocrawler.com -U datathon
+csv2psql convert --create-table -t hokus data/sample.csv | psql
 
 BEGIN
 CREATE TABLE

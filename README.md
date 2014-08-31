@@ -191,4 +191,4 @@ csv2psql convert --create-table --drop-table --truncate-table --no-transaction -
 
 ## Copyright
 
-Copyright (c) 2014 Tomas Korcak. See LICENSE for details.
+Copyright (c) 2014 Tomas Korcak. See [LICENSE](https://github.com/korczis/csv2psql/blob/master/LICENSE) for details.

@@ -9,7 +9,7 @@ require_relative '../../convert/convert'
 
 desc 'Convert csv file'
 command :convert do |c|
-  c.switch [:h, :header], desc: 'Header row included'
+  c.switch [:h, :header], desc: 'Header row included', default_value: true
   c.flag [:d, :delimiter], type: String, default_value: ','
 
   c.action do |global_options, options, args|

@@ -28,7 +28,9 @@ module Csv2Psql
         "'#{row[h]}'"
       end
 
-      "INSERT INTO #{opts[:table]}(#{headers.join(', ')}) VALUES(#{values.join(', ')});"
+      h_str = headers.join(', ')
+      v_str = values.join(', ')
+      "INSERT INTO #{opts[:table]}(#{h_str}) VALUES(#{v_str});"
     end
 
     def convert(paths, opts = {})
@@ -43,8 +45,7 @@ module Csv2Psql
         col_sep: opts[:delimiter] || DEFAULT_OPTIONS[:delimiter],
         headers: header,
         row_sep: opts[:separator] || DEFAULT_OPTIONS[:separator],
-        quote_char: opts[:quote] || DEFAULT_OPTIONS[:quote],
-
+        quote_char: opts[:quote] || DEFAULT_OPTIONS[:quote]
       }
     end
 

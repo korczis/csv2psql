@@ -2,5 +2,5 @@
 
 # Csv2Psql module
 module Csv2Psql
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 end

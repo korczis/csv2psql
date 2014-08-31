@@ -19,31 +19,40 @@ module Csv2Psql
       quote: '"'
     }
 
-    def format_row(row, opts = {})
-      if opts[:header]
-        headers = row.headers.map do |h|
-          h.downcase.gsub(/\./, '_')
-        end
-        h_str = headers.join(', ')
-      else
-        headers = row.map.with_index { |_item, i| i}
-        h_str = headers.map do |h|
-          "col_#{h}"
-        end
-        h_str = h_str.join(', ')
-      end
-
-      values = headers.map do |h|
-        "'#{row[h]}'"
-      end
-
-      v_str = values.join(', ')
-      "INSERT INTO #{opts[:table]}(#{h_str}) VALUES(#{v_str});"
-    end
-
     def convert(paths, opts = {})
       with_paths(paths, opts) do |data|
         puts format_row(data[:row], opts)
+      end
+    end
+
+    def format_row(row, opts = {})
+      header = get_header(row, opts)
+      columns = get_columns(row, opts, header).join(', ')
+      values = get_values(row, opts, header).join(', ')
+      "INSERT INTO #{opts[:table]}(#{columns}) VALUES(#{values});"
+    end
+
+    def get_header(row, opts = {})
+      if opts[:header]
+        row.headers
+      else
+        row.map.with_index { |_item, i| i }
+      end
+    end
+
+    def get_columns(row, opts = {}, header = get_header(row, opts))
+      if opts[:header]
+        header.map { |h| sanitize_header(h) }
+      else
+        row.map.with_index do |_item, i|
+          "col#{i}"
+        end
+      end
+    end
+
+    def get_values(row, opts = {}, header = get_header(row, opts))
+      header.map do |h|
+        "'#{row[h]}'"
       end
     end
 
@@ -57,21 +66,19 @@ module Csv2Psql
       }
     end
 
-    def sanitize_header(header)
-      header.map do |h|
-        h.downcase
-      end
+    def sanitize_header(header_column)
+      header_column.downcase.gsub(/\./, '_')
     end
 
     def with_path(path, opts = {}, &block)
-      puts "BEGIN;" if opts[:transaction]
+      puts 'BEGIN;' if opts[:transaction]
       csv_opts = merge_csv_options(opts)
       CSV.open(path, 'rt', csv_opts) do |csv|
         csv.each do |row|
           with_row(path, row, &block)
         end
       end
-      puts "COMMIT;" if opts[:transaction]
+      puts 'COMMIT;' if opts[:transaction]
     end
 
     def with_paths(paths, opts = {}, &block)

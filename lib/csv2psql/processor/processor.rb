@@ -63,12 +63,14 @@ module Csv2Psql
     end
 
     def with_path(path, opts = {}, &block)
+      puts "BEGIN;" if opts[:transaction]
       csv_opts = merge_csv_options(opts)
       CSV.open(path, 'rt', csv_opts) do |csv|
         csv.each do |row|
           with_row(path, row, &block)
         end
       end
+      puts "COMMIT;" if opts[:transaction]
     end
 
     def with_paths(paths, opts = {}, &block)

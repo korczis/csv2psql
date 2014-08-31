@@ -31,6 +31,11 @@ cmds = {
   s: {
     desc: 'Line separator',
     type: String, default_value: :auto
+  },
+
+  transaction: {
+    desc: 'Import in transaction block',
+    type: String, default_value: true
   }
 }
 
@@ -41,6 +46,7 @@ command :convert do |c|
   c.flag [:t, :table], cmds[:t]
   c.flag [:q, :quote], cmds[:q]
   c.flag [:s, :separator], cmds[:s]
+  c.switch [:transaction], cmds[:transaction]
 
   c.action do |global_options, options, args|
     fail ArgumentError, 'No file to convert specified' if args.empty?

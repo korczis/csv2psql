@@ -24,9 +24,9 @@ Tool for transforming CSV into SQL statements
 - Extendable (external modules can bring functionality)
 - Database aware
 - SQL Dialects sensitive
-  - Drop database
-  - Create database
-  - Truncate database
+  - [Drop table](https://github.com/korczis/csv2psql/blob/master/templates/drop_table.sql.erb)
+  - [Create table](https://github.com/korczis/csv2psql/blob/master/templates/create_table.sql.erb)
+  - [Truncate database](https://github.com/korczis/csv2psql/blob/master/templates/truncate_table.sql.erb)
 
 ## Getting started 
 

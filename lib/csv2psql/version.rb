@@ -2,5 +2,6 @@
 
 # Csv2Psql module
 module Csv2Psql
-  VERSION = '0.0.6'
+  CODENAME = 'Smelly cat'
+  VERSION = '0.0.7'
 end

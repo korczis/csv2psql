@@ -13,7 +13,7 @@ end
 
 include GLI::App
 
-program_desc "csv2psql #{Csv2Psql::VERSION}"
+program_desc "csv2psql #{Csv2Psql::VERSION} (Codename: #{Csv2Psql::CODENAME})"
 
 module Csv2Psql
   # Apollon CLI

@@ -2,28 +2,29 @@
 
 module Csv2Psql
   module Dialect
+    # PostgreSQL specific stuff
     class Psql
       NUMERIC_TYPES = [
         {
           type: :numeric,
           name: 'smallint',
           size: 2,
-          min: -32768,
-          max: 32767
+          min: -32_768,
+          max: 32_767
         },
         {
           type: :numeric,
           name: 'integer',
           size: 4,
-          min: -2147483648,
-          max: 2147483647
+          min: -2_147_483_648,
+          max: 2_147_483_647
         },
         {
           type: :numeric,
           name: 'bigint',
           size: 8,
-          min: -9223372036854775808,
-          max: 9223372036854775807
+          min: -9_223_372_036_854_775_808,
+          max: 9_223_372_036_854_775_807
         },
         {
           type: :numeric,
@@ -50,14 +51,14 @@ module Csv2Psql
           name: 'serial',
           size: 4,
           min: 1,
-          max: 2147483647
+          max: 2_147_483_647
         },
         {
           type: :numeric,
           name: 'bigserial',
           size: 8,
           min: 1,
-          max: 9223372036854775807
+          max: 9_223_372_036_854_775_807
         }
       ]
     end

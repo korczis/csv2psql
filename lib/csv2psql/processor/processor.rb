@@ -6,6 +6,7 @@ require 'pathname'
 require 'pp'
 
 require_relative '../version'
+require_relative '../helpers/erb_helper'
 
 module Csv2Psql
   # Csv2Psql processor class
@@ -16,13 +17,31 @@ module Csv2Psql
       delimiter: ',',
       header: true,
       separator: :auto,
+      table: 'my_table',
       quote: '"'
     }
+
+    BASE_DIR = File.join(File.dirname(__FILE__), '..', '..', '..')
+    TEMPLATE_DIR = File.join(BASE_DIR, 'templates')
+    CREATE_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'create_table.sql.erb')
 
     def convert(paths, opts = {})
       with_paths(paths, opts) do |data|
         puts format_row(data[:row], opts)
       end
+    end
+
+    def create_table(path, row, opts = {})
+      header = get_header(row, opts)
+      columns = get_columns(row, opts, header)
+      erb = ErbHelper.new
+      ctx = {
+        path: path,
+        header: header,
+        columns: columns,
+        table: opts[:table] || DEFAULT_OPTIONS[:table]
+      }
+      erb.process(CREATE_TABLE_TEMPLATE, ctx)
     end
 
     def format_row(row, opts = {})
@@ -73,9 +92,10 @@ module Csv2Psql
     def with_path(path, opts = {}, &block)
       puts 'BEGIN;' if opts[:transaction]
       csv_opts = merge_csv_options(opts)
+      @first_row = true
       CSV.open(path, 'rt', csv_opts) do |csv|
         csv.each do |row|
-          with_row(path, row, &block)
+          with_row(path, row, opts, &block)
         end
       end
       puts 'COMMIT;' if opts[:transaction]
@@ -88,11 +108,15 @@ module Csv2Psql
       end
     end
 
-    def with_row(path, row, &block)
+    def with_row(path, row, opts = {}, &block)
       args = {
         path: path,
         row: row
       }
+      if @first_row
+        puts create_table(path, row, opts)
+        @first_row = false
+      end
       block.call(args) if block_given?
     end
   end

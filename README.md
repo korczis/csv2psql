@@ -56,6 +56,7 @@ SYNOPSIS
     csv2psql [global options] convert [command options]
 
 COMMAND OPTIONS
+    --[no-]create-table - Crate SQL Table before inserts
     -d, --delimiter=arg - Column delimiter (default: ,)
     -h, --[no-]header   - Header row included (default: enabled)
     -q, --quote=arg     - Quoting character (default: ")

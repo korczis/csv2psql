@@ -34,6 +34,7 @@ module Csv2Psql
     TEMPLATE_DIR = File.join(BASE_DIR, 'templates')
     CREATE_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'create_table.sql.erb')
     DROP_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'drop_table.sql.erb')
+    HEADER_TEMPLATE = File.join(TEMPLATE_DIR, 'header.sql.erb')
     TRUNCATE_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'truncate_table.sql.erb')
 
     def convert(paths, opts = {})
@@ -54,7 +55,21 @@ module Csv2Psql
     end
 
     def create_header(path, row, opts = {})
+      ctx = create_erb_context(path, row, opts)
+      erb = ErbHelper.new
+      erb.process(HEADER_TEMPLATE, ctx)
+    end
+
+    def create_table(path, row, opts = {})
+      ctx = create_erb_context(path, row, opts)
+      erb = ErbHelper.new
+      erb.process(CREATE_TABLE_TEMPLATE, ctx)
+    end
+
+    def create_sql_script(path, row, opts = {})
       return unless @first_row
+
+      puts create_header(path, row, opts)
 
       TABLE_FUNCTIONS.each do |k, v|
         t = DEFAULT_OPTIONS[k]
@@ -63,12 +78,6 @@ module Csv2Psql
       end
 
       @first_row = false
-    end
-
-    def create_table(path, row, opts = {})
-      ctx = create_erb_context(path, row, opts)
-      erb = ErbHelper.new
-      erb.process(CREATE_TABLE_TEMPLATE, ctx)
     end
 
     def drop_table(path, row, opts = {})
@@ -148,7 +157,7 @@ module Csv2Psql
     end
 
     def with_row(path, row, opts = {}, &block)
-      create_header(path, row, opts)
+      create_sql_script(path, row, opts)
 
       args = { path: path, row: row }
       block.call(args) if block_given?

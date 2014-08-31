@@ -12,13 +12,14 @@ Tool for transforming CSV into SQL statements
 
 ## Features
 
-- In most cases works without any need for configuration
-- Anytime can be configured and/or extended externaly 
-- Database helpers (if requested)
+- Works outside of box
+- Customizable (parameters can be tweaked)
+- Extendable (external modules can bring functionality)
+- Database aware
+- - SQL Dialects sensitive
   - Drop database
   - Create database
   - Truncate database
-- SQL Dialects sensitive
 
 ## Getting started 
 

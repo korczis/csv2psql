@@ -12,6 +12,7 @@ command :convert do |c|
   c.switch [:h, :header], desc: 'Header row included', default_value: true
   c.flag [:d, :delimiter], desc: 'Column delimiter', type: String, default_value: ','
   c.flag [:t, :table], desc: 'Table to insert to', type: String, default_value: 'my_table'
+  c.flag [:q, :quote], desc: 'Quoting character', type: String, default_value: '"'
   c.flag [:s, :separator], desc: 'Line separator', type: String, default_value: :auto
 
   c.action do |global_options, options, args|

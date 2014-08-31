@@ -56,6 +56,7 @@ SYNOPSIS
     csv2psql [global options] convert [command options]
 
 COMMAND OPTIONS
+    --[no-]create-table - Crate SQL Table before inserts
     -d, --delimiter=arg - Column delimiter (default: ,)
     -h, --[no-]header   - Header row included (default: enabled)
     -q, --quote=arg     - Quoting character (default: ")
@@ -84,6 +85,32 @@ csv2psql convert data/sample.csv
 BEGIN;
 INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
 INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
+COMMIT;
+```
+
+**Convert CSV - Create table**
+
+```
+csv2psql convert --create-table -t pokus data/sample.csv
+
+BEGIN;
+-- Table: pokus
+-- DROP TABLE pokus;
+
+CREATE TABLE pokus(
+	id TEXT,
+	firstname TEXT,
+	lastname TEXT,
+	address_street TEXT,
+	address_city TEXT,
+	address_details_note TEXT
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO pokus(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
+INSERT INTO pokus(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
 COMMIT;
 ```
 

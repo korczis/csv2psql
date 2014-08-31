@@ -15,6 +15,7 @@ module Csv2Psql
 
     DEFAULT_OPTIONS = {
       'create-table' => false,
+      'drop-table' => false,
       delimiter: ',',
       header: true,
       separator: :auto,
@@ -26,6 +27,7 @@ module Csv2Psql
     BASE_DIR = File.join(File.dirname(__FILE__), '..', '..', '..')
     TEMPLATE_DIR = File.join(BASE_DIR, 'templates')
     CREATE_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'create_table.sql.erb')
+    DROP_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'drop_table.sql.erb')
 
     def convert(paths, opts = {})
       with_paths(paths, opts) do |data|
@@ -33,17 +35,41 @@ module Csv2Psql
       end
     end
 
-    def create_table(path, row, opts = {})
+    def create_erb_context(path, row, opts = {})
       header = get_header(row, opts)
       columns = get_columns(row, opts, header)
-      erb = ErbHelper.new
-      ctx = {
+      {
         path: path,
         header: header,
         columns: columns,
         table: opts[:table] || DEFAULT_OPTIONS[:table]
       }
+    end
+
+    def create_header(path, row, opts = {})
+      return unless @first_row
+
+      t = DEFAULT_OPTIONS['create-table']
+      t = opts['drop-table'] unless opts['drop-table'].nil?
+      puts drop_table(path, row, opts) if t
+
+      t = DEFAULT_OPTIONS['create-table']
+      t = opts['create-table'] unless opts['create-table'].nil?
+      puts create_table(path, row, opts) if t
+
+      @first_row = false
+    end
+
+    def create_table(path, row, opts = {})
+      ctx = create_erb_context(path, row, opts)
+      erb = ErbHelper.new
       erb.process(CREATE_TABLE_TEMPLATE, ctx)
+    end
+
+    def drop_table(path, row, opts = {})
+      ctx = create_erb_context(path, row, opts)
+      erb = ErbHelper.new
+      erb.process(DROP_TABLE_TEMPLATE, ctx)
     end
 
     def format_row(row, opts = {})
@@ -111,13 +137,9 @@ module Csv2Psql
     end
 
     def with_row(path, row, opts = {}, &block)
+      create_header(path, row, opts)
+
       args = { path: path, row: row }
-      if @first_row
-        ct = DEFAULT_OPTIONS['create-table']
-        ct = opts['create-table'] unless opts['create-table'].nil?
-        puts create_table(path, row, opts) if ct
-        @first_row = false
-      end
       block.call(args) if block_given?
     end
   end

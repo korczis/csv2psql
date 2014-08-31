@@ -1,7 +1,3 @@
--- Table: <%= ctx[:table] %>
-
--- DROP TABLE <%= ctx[:table] %>;
-
 CREATE TABLE <%= ctx[:table] %>
 (
 <% ctx[:columns].each_with_index do |item, index| %>

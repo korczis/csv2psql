@@ -46,6 +46,11 @@ cmds = {
   'create-table' => {
     desc: 'Crate SQL Table before inserts',
     default_value: Csv2Psql::Processor::DEFAULT_OPTIONS['create-table']
+  },
+
+  'drop-table' => {
+    desc: 'Drop SQL Table before inserts',
+    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS['drop-table']
   }
 }
 
@@ -58,6 +63,7 @@ command :convert do |c|
   c.flag [:s, :separator], cmds[:s]
   c.switch [:transaction], cmds[:transaction]
   c.switch ['create-table'], cmds['create-table']
+  c.switch ['drop-table'], cmds['drop-table']
 
   c.action do |global_options, options, args|
     fail ArgumentError, 'No file to convert specified' if args.empty?

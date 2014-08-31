@@ -45,7 +45,7 @@ module Csv2Psql
         header.map { |h| sanitize_header(h) }
       else
         row.map.with_index do |_item, i|
-          "col#{i}"
+          "col_#{i}"
         end
       end
     end

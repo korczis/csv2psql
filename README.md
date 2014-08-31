@@ -176,7 +176,7 @@ COMMIT;
 **Convert CSV - Load CIA Factbook automagically**
 
 ```
-csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql -h apollocrawler.com -U datathon -d csv2psql
+csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql
 ```
 
 ## Contributing to csv2psql

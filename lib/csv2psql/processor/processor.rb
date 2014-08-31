@@ -10,7 +10,7 @@ require_relative '../helpers/erb_helper'
 
 module Csv2Psql
   # Csv2Psql processor class
-  class Processor
+  class Processor # rubocop:disable Metrics/ClassLength
     attr_reader :path
 
     DEFAULT_OPTIONS = {
@@ -24,10 +24,17 @@ module Csv2Psql
       quote: '"'
     }
 
+    TABLE_FUNCTIONS = {
+      'drop-table' => :drop_table,
+      'create-table' => :create_table,
+      'truncate-table' => :truncate_table
+    }
+
     BASE_DIR = File.join(File.dirname(__FILE__), '..', '..', '..')
     TEMPLATE_DIR = File.join(BASE_DIR, 'templates')
     CREATE_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'create_table.sql.erb')
     DROP_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'drop_table.sql.erb')
+    TRUNCATE_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'truncate_table.sql.erb')
 
     def convert(paths, opts = {})
       with_paths(paths, opts) do |data|
@@ -49,13 +56,11 @@ module Csv2Psql
     def create_header(path, row, opts = {})
       return unless @first_row
 
-      t = DEFAULT_OPTIONS['create-table']
-      t = opts['drop-table'] unless opts['drop-table'].nil?
-      puts drop_table(path, row, opts) if t
-
-      t = DEFAULT_OPTIONS['create-table']
-      t = opts['create-table'] unless opts['create-table'].nil?
-      puts create_table(path, row, opts) if t
+      TABLE_FUNCTIONS.each do |k, v|
+        t = DEFAULT_OPTIONS[k]
+        t = opts[k] unless opts[k].nil?
+        puts send(v, path, row, opts) if t
+      end
 
       @first_row = false
     end
@@ -115,6 +120,12 @@ module Csv2Psql
 
     def sanitize_header(header_column)
       header_column.downcase.gsub(/[^0-9a-z ]/i, '_')
+    end
+
+    def truncate_table(path, row, opts = {})
+      ctx = create_erb_context(path, row, opts)
+      erb = ErbHelper.new
+      erb.process(TRUNCATE_TABLE_TEMPLATE, ctx)
     end
 
     def with_path(path, opts = {}, &block)

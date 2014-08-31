@@ -24,6 +24,67 @@ gem install csv2psql
 csv2psql convert data/sample.csv
 ```
 
+**Global help**
+
+```
+csv2psql help
+
+NAME
+    csv2psql - csv2psql 0.0.5
+
+SYNOPSIS
+    csv2psql [global options] command [command options] [arguments...]
+
+GLOBAL OPTIONS
+    --help - Show this message
+
+COMMANDS
+    convert - Convert csv file
+    help    - Shows a list of commands or help for one command
+    version - Print version info
+```
+
+**Convert help**
+
+```
+sv2psql help convert
+NAME
+    convert - Convert csv file
+
+SYNOPSIS
+    csv2psql [global options] convert [command options]
+
+COMMAND OPTIONS
+    -d, --delimiter=arg - Column delimiter (default: ,)
+    -h, --[no-]header   - Header row included (default: enabled)
+    -q, --quote=arg     - Quoting character (default: ")
+    -s, --separator=arg - Line separator (default: auto)
+    -t, --table=arg     - Table to insert to (default: my_table)
+    --[no-]transaction  - Import in transaction block (default: enabled)
+```
+
+## Example
+
+**Input CSV**
+
+```
+cat data/sample.csv
+id,Firstname,Lastname,Address.Street,Address.City,Address.Details.Note
+12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available
+45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance
+```
+
+**Convert CSV**
+
+```
+csv2psql convert data/sample.csv
+
+BEGIN;
+INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
+INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
+COMMIT;
+```
+
 ## Contributing to csv2psql
 
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

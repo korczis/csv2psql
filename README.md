@@ -4,7 +4,7 @@ Tool for transforming CSV into SQL statements
 
 ## Status
 
-[![Gem Version](https://badge.fury.io/rb/csv2psql.svg)](http://badge.fury.io/rb/csv2psql)
+[![Gem Version](https://badge.fury.io/rb/csv2psql.svg)](http://badge.fury.io/rb/csv2psql) 
 [![Downloads](http://img.shields.io/gem/dt/csv2psql.svg)](http://rubygems.org/gems/csv2psql)
 [![Build Status](https://travis-ci.org/korczis/csv2psql.svg?branch=master)](https://travis-ci.org/korczis/csv2psql)
 [![Code Climate](https://codeclimate.com/github/korczis/csv2psql/badges/gpa.svg)](https://codeclimate.com/github/korczis/csv2psql)

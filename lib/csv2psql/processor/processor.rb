@@ -67,7 +67,7 @@ module Csv2Psql
     end
 
     def sanitize_header(header_column)
-      header_column.downcase.gsub(/\./, '_')
+      header_column.downcase.gsub(/[^0-9a-z ]/i, '_')
     end
 
     def with_path(path, opts = {}, &block)

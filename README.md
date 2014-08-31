@@ -8,6 +8,20 @@ Tool for transforming CSV into SQL statements for insert or update into DB
 [![Code Climate](https://codeclimate.com/github/korczis/csv2psql/badges/gpa.svg)](https://codeclimate.com/github/korczis/csv2psql)
 [![Dependency Status](https://gemnasium.com/korczis/csv2psql.svg)](https://gemnasium.com/korczis/csv2psql)
 
+## Getting started 
+
+```
+gem install csv2psql
+```
+
+## Usage
+
+**Simple conversion**
+
+```
+csv2psql convert data/sample.csv
+```
+
 ## Contributing to csv2psql
 
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

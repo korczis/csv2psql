@@ -114,6 +114,17 @@ INSERT INTO pokus(id, firstname, lastname, address_street, address_city, address
 COMMIT;
 ```
 
+**Convert CSV - Stream directly to Postgre client (psql)**
+
+```
+csv2psql convert --create-table -t hokus data/sample.csv | psql -h apollocrawler.com -U datathon
+BEGIN
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+COMMIT
+```
+
 ## Contributing to csv2psql
 
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

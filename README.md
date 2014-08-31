@@ -155,6 +155,12 @@ INSERT INTO test(id, firstname, lastname, address_street, address_city, address_
 COMMIT;
 ```
 
+**Convert CSV - Load CIA Factbook automagically**
+
+```
+csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql -h apollocrawler.com -U datathon -d csv2psql
+```
+
 ## Contributing to csv2psql
 
 - Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

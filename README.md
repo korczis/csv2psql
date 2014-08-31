@@ -47,7 +47,8 @@ COMMANDS
 **Convert help**
 
 ```
-sv2psql help convert
+csv2psql help convert
+
 NAME
     convert - Convert csv file
 
@@ -69,6 +70,7 @@ COMMAND OPTIONS
 
 ```
 cat data/sample.csv
+
 id,Firstname,Lastname,Address.Street,Address.City,Address.Details.Note
 12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available
 45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance

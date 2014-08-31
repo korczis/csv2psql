@@ -10,6 +10,8 @@ require_relative '../version'
 module Csv2Psql
   # Csv2Psql processor class
   class Processor
+    attr_reader :path
+
     DEFAULT_OPTIONS = {
       delimiter: ',',
       header: true
@@ -28,28 +30,47 @@ module Csv2Psql
     end
 
     def convert(paths, opts = {})
-      paths = [paths] unless paths.is_a?(Array)
-      paths.each do |path|
-        puts "Converting #{path}"
-
-        header = !opts[:header].nil? ? opts[:header] : DEFAULT_OPTIONS[:header]
-        csv_opts = {
-          col_sep: opts[:delimiter] || DEFAULT_OPTIONS[:delimiter],
-          :headers => header
-        }
-
-        CSV.open(path, 'rt', csv_opts) do |csv|
-          csv.each do |row|
-            puts format_row(row)
-          end
-        end
+      with_paths(paths, opts) do |data|
+        puts format_row(data[:row])
       end
+    end
+
+    def merge_csv_options(opts = {})
+      header = !opts[:header].nil? ? opts[:header] : DEFAULT_OPTIONS[:header]
+      {
+        col_sep: opts[:delimiter] || DEFAULT_OPTIONS[:delimiter],
+        headers: header
+      }
     end
 
     def sanitize_header(header)
       header.map do |h|
         h.downcase
       end
+    end
+
+    def with_path(path, opts = {}, &block)
+      csv_opts = merge_csv_options(opts)
+      CSV.open(path, 'rt', csv_opts) do |csv|
+        csv.each do |row|
+          with_row(path, row, &block)
+        end
+      end
+    end
+
+    def with_paths(paths, opts = {}, &block)
+      paths = [paths] unless paths.is_a?(Array)
+      paths.each do |path|
+        with_path(path, opts, &block)
+      end
+    end
+
+    def with_row(path, row, &block)
+      args = {
+        path: path,
+        row: row
+      }
+      block.call(args) if block_given?
     end
   end
 end

@@ -118,6 +118,7 @@ COMMIT;
 
 ```
 csv2psql convert --create-table -t hokus data/sample.csv | psql -h apollocrawler.com -U datathon
+
 BEGIN
 CREATE TABLE
 INSERT 0 1

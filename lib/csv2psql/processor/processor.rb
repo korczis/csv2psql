@@ -14,7 +14,8 @@ module Csv2Psql
 
     DEFAULT_OPTIONS = {
       delimiter: ',',
-      header: true
+      header: true,
+      separator: :auto
     }
 
     def format_row(row, opts = {})
@@ -39,7 +40,8 @@ module Csv2Psql
       header = !opts[:header].nil? ? opts[:header] : DEFAULT_OPTIONS[:header]
       {
         col_sep: opts[:delimiter] || DEFAULT_OPTIONS[:delimiter],
-        headers: header
+        headers: header,
+        row_sep: opts[:separator] || DEFAULT_OPTIONS[:separator],
       }
     end
 

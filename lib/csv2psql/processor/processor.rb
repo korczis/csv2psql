@@ -113,7 +113,9 @@ module Csv2Psql
 
     def get_values(row, opts = {}, header = get_header(row, opts))
       header.map do |h|
-        "'#{row[h]}'"
+        value = row[h]
+        sanitized_value = sanitize_value(value)
+        "'#{sanitized_value}'"
       end
     end
 
@@ -128,7 +130,12 @@ module Csv2Psql
     end
 
     def sanitize_header(header_column)
-      header_column.downcase.gsub(/[^0-9a-z ]/i, '_')
+      header_column.downcase.gsub(/[^0-9a-z]/i, '_')
+    end
+
+    def sanitize_value(value)
+      value ||= ''
+      value.gsub("'", "''")
     end
 
     def truncate_table(path, row, opts = {})

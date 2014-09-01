@@ -7,6 +7,10 @@ describe Csv2Psql do
     run_cli(%w(help analyze))
   end
 
+  it 'analyze data/cia-data-all.csv' do
+    run_cli(%w(analyze data/cia-data-all.csv))
+  end
+
   it 'analyze data/sample.csv' do
     run_cli(%w(analyze data/sample.csv))
   end

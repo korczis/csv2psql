@@ -7,6 +7,10 @@ describe Csv2Psql do
     run_cli(%w(help convert))
   end
 
+  it 'convert data/cia-data-all.csv' do
+    run_cli(%w(convert data/cia-data-all.csv))
+  end
+
   it 'convert data/sample.csv' do
     run_cli(%w(convert data/sample.csv))
   end

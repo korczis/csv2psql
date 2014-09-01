@@ -29,6 +29,12 @@ cmds = {
     default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:delimiter]
   },
 
+  l: {
+    desc: 'How many rows process',
+    type: Integer,
+    default_value: -1
+  },
+
   q: {
     desc: 'Quoting character',
     type: String,
@@ -39,13 +45,21 @@ cmds = {
     desc: 'Line separator',
     type: String,
     default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:separator]
+  },
+
+  'skip' => {
+    desc: 'How many rows skip',
+    type: Integer,
+    default_value: -1
   }
 }
 
 switch [:h, :header], cmds[:h]
 flag [:d, :delimiter], cmds[:d]
+flag [:l, :limit], cmds[:l]
 flag [:q, :quote], cmds[:q]
 flag [:s, :separator], cmds[:s]
+flag [:skip], cmds['skip']
 
 module Csv2Psql
   # Apollon CLI
@@ -66,4 +80,4 @@ module Csv2Psql
   end
 end
 
-launch
+launch if __FILE__ == $PROGRAM_NAME

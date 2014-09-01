@@ -48,13 +48,17 @@ csv2psql convert data/sample.csv
 csv2psql help
 
 NAME
-    csv2psql - csv2psql 0.0.5
+    csv2psql - csv2psql 0.0.7 (Codename: Smelly cat)
 
 SYNOPSIS
     csv2psql [global options] command [command options] [arguments...]
 
 GLOBAL OPTIONS
-    --help - Show this message
+    -d, --delimiter=arg - Column delimiter (default: ,)
+    -h, --[no-]header   - Header row included (default: enabled)
+    --help              - Show this message
+    -q, --quote=arg     - Quoting character (default: ")
+    -s, --separator=arg - Line separator (default: auto)
 
 COMMANDS
     convert - Convert csv file
@@ -75,12 +79,8 @@ SYNOPSIS
 
 COMMAND OPTIONS
     --[no-]create-table   - Crate SQL Table before inserts
-    -d, --delimiter=arg   - Column delimiter (default: ,)
     --[no-]drop-table     - Drop SQL Table before inserts
-    -h, --[no-]header     - Header row included (default: enabled)
-    -q, --quote=arg       - Quoting character (default: ")
-    -s, --separator=arg   - Line separator (default: auto)
-    -t, --table=arg       - Table to insert to (default: my_table)
+    -t, --table=arg       - Table to insert to (default: none)
     --[no-]transaction    - Import in transaction block (default: enabled)
     --[no-]truncate-table - Truncate SQL Table before inserts
 ```

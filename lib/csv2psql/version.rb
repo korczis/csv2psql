@@ -2,6 +2,6 @@
 
 # Csv2Psql module
 module Csv2Psql
-  CODENAME = 'Flying fish'
-  VERSION = '0.0.9'
+  CODENAME = 'Lazy dog'
+  VERSION = '0.0.10'
 end

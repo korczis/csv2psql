@@ -6,6 +6,7 @@ require 'pathname'
 require 'pp'
 
 require_relative '../analyzer/analyzer'
+require_relative '../frontend/csv'
 require_relative '../generator/generator'
 require_relative '../helpers/csv_helper'
 require_relative '../helpers/erb_helper'
@@ -29,6 +30,7 @@ module Csv2Psql
       @output = Output.new
       @generator = Generator.new(@output)
       @analyzer = Analyzer.new
+      @frontend = Frontend::Csv.new
     end
 
     def analyze(paths, opts = {})
@@ -86,7 +88,7 @@ module Csv2Psql
       output.write 'BEGIN;' if opts[:transaction]
       csv_opts = merge_csv_options(opts)
       @first_row = true
-      CSV.open(path, 'rt', csv_opts) do |csv|
+      @frontend.open(path, 'rt', csv_opts) do |csv|
         csv.each do |row|
           with_row(path, row, opts, &block)
         end

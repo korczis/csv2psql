@@ -103,8 +103,10 @@ id,Firstname,Lastname,Address.Street,Address.City,Address.Details.Note
 csv2psql convert data/sample.csv
 
 BEGIN;
-INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
-INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
+-- Table: my_table
+
+INSERT INTO (id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
+INSERT INTO (id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
 COMMIT;
 ```
 
@@ -115,7 +117,6 @@ csv2psql convert --create-table -t pokus data/sample.csv
 
 BEGIN;
 -- Table: pokus
--- DROP TABLE pokus;
 
 CREATE TABLE pokus(
 	id TEXT,

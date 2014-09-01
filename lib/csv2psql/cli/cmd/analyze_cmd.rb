@@ -2,6 +2,7 @@
 
 require 'gli'
 require 'pp'
+require 'terminal-table'
 
 include GLI::App
 
@@ -16,6 +17,16 @@ command :analyze do |c|
 
     opts = {}.merge(global_options).merge(options)
     res = Csv2Psql::Convert.analyze(args, opts)
-    pp res.files
+
+    res.files.each do |_file, details|
+      header = ['column'] + res.analyzers.map { |a| a[:name] }
+
+      rows = details[:columns].map do |k, v|
+        [k] + v.keys.map { |name| v[name].count }
+      end
+
+      table = Terminal::Table.new headings: header, rows: rows
+      puts table
+    end
   end
 end

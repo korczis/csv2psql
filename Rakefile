@@ -28,7 +28,7 @@ end
 
 desc 'Run Rubocop'
 task :cop do
-  exec 'rubocop'
+  exec 'rubocop lib/ spec/ templates/ Gemfile Rakefile'
 end
 
 namespace :gem do

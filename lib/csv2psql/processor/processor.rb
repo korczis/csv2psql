@@ -5,28 +5,41 @@ require 'multi_json'
 require 'pathname'
 require 'pp'
 
-require_relative '../version'
+require_relative '../analyzer/analyzer'
 require_relative '../generator/generator'
+require_relative '../helpers/csv_helper'
 require_relative '../helpers/erb_helper'
 require_relative '../output/output'
+require_relative '../version'
 
 module Csv2Psql
   # Csv2Psql processor class
   class Processor
-    attr_reader :generator, :output, :path
+    attr_reader :analyzer, :generator, :output, :path
 
     DEFAULT_OPTIONS = {
       delimiter: ',',
       header: true,
       separator: :auto,
-      transaction: true,
+      transaction: false,
       quote: '"'
     }
 
     def initialize
       @output = Output.new
       @generator = Generator.new(@output)
+      @analyzer = Analyzer.new
     end
+
+    def analyze(paths, opts = {})
+      with_paths(paths, opts) do |data|
+        path = data[:path]
+        row = data[:row]
+        analyzer.analyze(path, row, opts)
+      end
+      analyzer
+    end
+
 
     def convert(paths, opts = {})
       file_headers = {}

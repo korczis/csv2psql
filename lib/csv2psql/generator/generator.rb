@@ -6,6 +6,7 @@ require 'pathname'
 require 'pp'
 
 require_relative '../version'
+require_relative '../helpers/csv_helper'
 require_relative '../helpers/erb_helper'
 
 module Csv2Psql
@@ -86,11 +87,7 @@ module Csv2Psql
     end
 
     def get_header(row, opts = {})
-      if opts[:header]
-        row.headers
-      else
-        row.map.with_index { |_item, i| i }
-      end
+      CsvHelper.get_header(row, opts)
     end
 
     def get_columns(row, opts = {}, header = get_header(row, opts))

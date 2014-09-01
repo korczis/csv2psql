@@ -16,6 +16,11 @@ module Csv2Psql
         p = Processor.new
         p.convert(paths, opts)
       end
+
+      def analyze(paths, opts = {})
+        p = Processor.new
+        p.analyze(paths, opts)
+      end
     end
   end
 end

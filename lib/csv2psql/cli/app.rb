@@ -49,9 +49,9 @@ flag [:s, :separator], cmds[:s]
 
 module Csv2Psql
   # Apollon CLI
-  module Cli
-    # CLI Application
-    class App
+      module Cli
+        # CLI Application
+        class App
       extend Csv2Psql::Cli::Shared
 
       cmds = File.absolute_path(File.join(File.dirname(__FILE__), 'cmd'))

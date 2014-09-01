@@ -2,6 +2,7 @@
 
 require_relative '../../lib/csv2psql/cli/cli'
 
+# CliHelper
 module CliHelper
   # Execute block and capture its stdou
   # @param block Block to be executed with stdout redirected
@@ -10,7 +11,7 @@ module CliHelper
     original_stdout = $stdout
     $stdout = fake = StringIO.new
     begin
-      yield
+      block.call if block_given?
     ensure
       $stdout = original_stdout
     end
@@ -21,10 +22,10 @@ module CliHelper
   # @param args Arguments
   # @return Captured stdout
   def run_cli(args = [])
-    old = $0
-    $0 = 'csv2psql'
+    old = $PROGRAM_NAME
+    $PROGRAM_NAME = 'csv2psql'
     res = capture_stdout { Csv2Psql::Cli.main(args) }
-    $0 = old
+    $PROGRAM_NAME = old
     res
   end
 end

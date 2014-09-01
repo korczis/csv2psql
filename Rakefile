@@ -25,7 +25,7 @@ end
 
 desc 'Run Rubocop'
 task :cop do
-  exec 'rubocop lib/'
+  exec 'rubocop lib/ spec/'
 end
 
 namespace :test do

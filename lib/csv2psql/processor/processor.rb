@@ -42,18 +42,14 @@ module Csv2Psql
 
     def convert(paths, opts = {})
       details = {}
-      get_file_details(details, path)
-
       with_paths(paths, opts) do |data|
-        path = data[:path]
-        row = data[:row]
-
-        unless details[:header]
-          generator.create_sql_script(path, row, opts)
-          details[:header] = true
+        detail = get_file_details(details, path)
+        unless detail[:header]
+          generator.create_sql_script(data[:path], data[:row], opts)
+          detail[:header] = true
         end
 
-        output.write generator.format_row(row, opts)
+        output.write generator.format_row(data[:row], opts)
       end
     end
 

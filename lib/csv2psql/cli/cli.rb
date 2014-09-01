@@ -5,6 +5,7 @@ require 'pp'
 
 # Define Csv2Psql::Cli as GLI Wrapper
 module Csv2Psql
+  # CLI/GLI Wrapper
   module Cli
     include GLI::App
 

@@ -9,6 +9,8 @@ require 'coveralls/rake/task'
 
 require 'rspec/core/rake_task'
 
+require 'yard'
+
 Coveralls::RakeTask.new
 
 RSpec::Core::RakeTask.new(:test)
@@ -54,6 +56,9 @@ task :usage do
   # puts "No rake task specified so listing them ..."
   # Rake.application['tasklist'].invoke
 end
+
+YARD::Rake::YardocTask.new
+
 task default: [:usage]
 
 Rake.application['usage'].invoke if __FILE__ == $PROGRAM_NAME

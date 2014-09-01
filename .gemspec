@@ -31,7 +31,9 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4', '>= 0.4.0'
   s.add_development_dependency 'coveralls', '~> 0.7', '>= 0.7.0r'
+  s.add_development_dependency "redcarpet", "~> 3.1.1" if RUBY_PLATFORM != 'java'
   s.add_development_dependency 'rspec', '~> 3.0', '>= 3.0.0'
   s.add_development_dependency 'rubocop', '~> 0.24', '>= 0.24.0'
   s.add_development_dependency 'simplecov', '~> 0.8', '>= 0.8.2'
+  s.add_development_dependency 'yard', '~> 0.8.7.3'
 end

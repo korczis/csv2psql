@@ -1,0 +1,15 @@
+--protected
+--no-private
+--verbose
+--markup markdown
+--markup-provider redcarpet
+--hide-void-return
+--exclude LICENSE
+--no-cache
+--output-dir doc/html
+lib/**/*.rb
+ext/**/*{.m,.c}
+spec/**/*_spec.rb
+-
+README.md
+TODO.md

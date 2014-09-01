@@ -15,6 +15,8 @@ RSpec::Core::RakeTask.new(:test)
 
 desc 'Run continuous integration test'
 task :ci do
+  token = 'f9c7d31fe9fb2808cbb21642c4d1d20d1bfc1ba0d6321b10d7edf5725a5c8473'
+  ENV['CODECLIMATE_REPO_TOKEN'] = token
   Rake::Task['test:unit'].invoke
   # unless ENV['TRAVIS'] == 'true' && ENV['TRAVIS_SECURE_ENV_VARS'] == 'false'
   #   Rake::Task['test:integration'].invoke

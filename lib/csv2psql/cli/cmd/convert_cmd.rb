@@ -9,33 +9,10 @@ require_relative '../../convert/convert'
 require_relative '../../processor/processor'
 
 cmds = {
-  h: {
-    desc: 'Header row included',
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:header]
-  },
-
-  d: {
-    desc: 'Column delimiter',
-    type: String,
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:delimiter]
-  },
-
   t: {
     desc: 'Table to insert to',
     type: String,
     default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:table]
-  },
-
-  q: {
-    desc: 'Quoting character',
-    type: String,
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:quote]
-  },
-
-  s: {
-    desc: 'Line separator',
-    type: String,
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:separator]
   },
 
   transaction: {
@@ -61,11 +38,7 @@ cmds = {
 
 desc 'Convert csv file'
 command :convert do |c|
-  c.switch [:h, :header], cmds[:h]
-  c.flag [:d, :delimiter], cmds[:d]
   c.flag [:t, :table], cmds[:t]
-  c.flag [:q, :quote], cmds[:q]
-  c.flag [:s, :separator], cmds[:s]
   c.switch [:transaction], cmds[:transaction]
   c.switch ['create-table'], cmds['create-table']
   c.switch ['drop-table'], cmds['drop-table']

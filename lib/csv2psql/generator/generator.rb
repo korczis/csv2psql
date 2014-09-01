@@ -68,8 +68,6 @@ module Csv2Psql
         t = opts[k] unless opts[k].nil?
         output.write send(v, path, row, opts) if t
       end
-
-      @first_row = false
     end
 
     def drop_table(path, row, opts = {})
@@ -79,10 +77,12 @@ module Csv2Psql
     end
 
     def format_row(row, opts = {})
+      table = opts[:table] || DEFAULT_OPTIONS[:table]
+
       header = get_header(row, opts)
       columns = get_columns(row, opts, header).join(', ')
       values = get_values(row, opts, header).join(', ')
-      "INSERT INTO #{opts[:table]}(#{columns}) VALUES(#{values});"
+      "INSERT INTO #{table}(#{columns}) VALUES(#{values});"
     end
 
     def get_header(row, opts = {})

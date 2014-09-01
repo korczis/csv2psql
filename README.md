@@ -2,6 +2,12 @@
 
 Tool for transforming CSV into SQL statements
 
+*Formalities*
+
+- [License](https://github.com/korczis/csv2psql/blob/master/LICENSE)
+- [To Do](https://github.com/korczis/csv2psql/blob/master/TODO.md)
+- [Issues](https://github.com/korczis/csv2psql/issues)
+
 ## Status
 
 [![Gem Version](https://badge.fury.io/rb/csv2psql.svg)](http://badge.fury.io/rb/csv2psql) 
@@ -9,6 +15,18 @@ Tool for transforming CSV into SQL statements
 [![Build Status](https://travis-ci.org/korczis/csv2psql.svg?branch=master)](https://travis-ci.org/korczis/csv2psql)
 [![Code Climate](https://codeclimate.com/github/korczis/csv2psql/badges/gpa.svg)](https://codeclimate.com/github/korczis/csv2psql)
 [![Dependency Status](https://gemnasium.com/korczis/csv2psql.svg)](https://gemnasium.com/korczis/csv2psql)
+
+
+## Features
+
+- Works outside of box
+- Customizable (parameters can be tweaked)
+- Extendable (external modules can bring functionality)
+- Database aware
+- SQL Dialects sensitive
+  - [Drop table](https://github.com/korczis/csv2psql/blob/master/templates/drop_table.sql.erb)
+  - [Create table](https://github.com/korczis/csv2psql/blob/master/templates/create_table.sql.erb)
+  - [Truncate database](https://github.com/korczis/csv2psql/blob/master/templates/truncate_table.sql.erb)
 
 ## Getting started 
 
@@ -30,13 +48,17 @@ csv2psql convert data/sample.csv
 csv2psql help
 
 NAME
-    csv2psql - csv2psql 0.0.5
+    csv2psql - csv2psql 0.0.7 (Codename: Smelly cat)
 
 SYNOPSIS
     csv2psql [global options] command [command options] [arguments...]
 
 GLOBAL OPTIONS
-    --help - Show this message
+    -d, --delimiter=arg - Column delimiter (default: ,)
+    -h, --[no-]header   - Header row included (default: enabled)
+    --help              - Show this message
+    -q, --quote=arg     - Quoting character (default: ")
+    -s, --separator=arg - Line separator (default: auto)
 
 COMMANDS
     convert - Convert csv file
@@ -57,12 +79,8 @@ SYNOPSIS
 
 COMMAND OPTIONS
     --[no-]create-table   - Crate SQL Table before inserts
-    -d, --delimiter=arg   - Column delimiter (default: ,)
     --[no-]drop-table     - Drop SQL Table before inserts
-    -h, --[no-]header     - Header row included (default: enabled)
-    -q, --quote=arg       - Quoting character (default: ")
-    -s, --separator=arg   - Line separator (default: auto)
-    -t, --table=arg       - Table to insert to (default: my_table)
+    -t, --table=arg       - Table to insert to (default: none)
     --[no-]transaction    - Import in transaction block (default: enabled)
     --[no-]truncate-table - Truncate SQL Table before inserts
 ```
@@ -85,8 +103,10 @@ id,Firstname,Lastname,Address.Street,Address.City,Address.Details.Note
 csv2psql convert data/sample.csv
 
 BEGIN;
-INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
-INSERT INTO my_table(id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
+-- Table: my_table
+
+INSERT INTO (id, firstname, lastname, address_street, address_city, address_details_note) VALUES('12345', 'Joe', 'Doe', '#2140 Taylor Street, 94133', 'San Francisco', 'Pool available');
+INSERT INTO (id, firstname, lastname, address_street, address_city, address_details_note) VALUES('45678', 'Jack', 'Plumber', '#111 Sutter St, 94104', 'San Francisco', 'Korean Deli near to main entrance');
 COMMIT;
 ```
 
@@ -97,7 +117,6 @@ csv2psql convert --create-table -t pokus data/sample.csv
 
 BEGIN;
 -- Table: pokus
--- DROP TABLE pokus;
 
 CREATE TABLE pokus(
 	id TEXT,
@@ -158,7 +177,7 @@ COMMIT;
 **Convert CSV - Load CIA Factbook automagically**
 
 ```
-csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql -h apollocrawler.com -U datathon -d csv2psql
+csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql
 ```
 
 ## Contributing to csv2psql
@@ -173,4 +192,4 @@ csv2psql convert --create-table --drop-table --truncate-table --no-transaction -
 
 ## Copyright
 
-Copyright (c) 2014 Tomas Korcak. See LICENSE for details.
+Copyright (c) 2014 [Tomas Korcak](https://www.linkedin.com/in/korcaktomas). See [LICENSE](https://github.com/korczis/csv2psql/blob/master/LICENSE) for details.

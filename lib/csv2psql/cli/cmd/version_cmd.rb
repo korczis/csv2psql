@@ -8,9 +8,11 @@ require_relative '../../version'
 
 require_relative '../shared'
 
-desc 'Print version info'
-command :version do |c|
-  c.action do |_global_options, _options, _args|
-    pp Csv2Psql::VERSION
+Csv2Psql::Cli.module_eval do
+  desc 'Print version info'
+  command :version do |c|
+    c.action do |_global_options, _options, _args|
+      pp Csv2Psql::VERSION
+    end
   end
 end

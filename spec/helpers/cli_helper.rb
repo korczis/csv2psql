@@ -23,7 +23,7 @@ module CliHelper
   def run_cli(args = [])
     old = $0
     $0 = 'csv2psql'
-    res = capture_stdout { launch(args) }
+    res = capture_stdout { Csv2Psql::Cli.main(args) }
     $0 = old
     res
   end

@@ -33,9 +33,7 @@ module Csv2Psql
 
     def analyze(paths, opts = {})
       with_paths(paths, opts) do |data|
-        path = data[:path]
-        row = data[:row]
-        analyzer.analyze(path, row, opts)
+        analyzer.analyze(data[:path], data[:row], opts)
       end
       analyzer
     end
@@ -43,13 +41,17 @@ module Csv2Psql
     def convert(paths, opts = {})
       details = {}
       with_paths(paths, opts) do |data|
-        detail = get_file_details(details, path)
-        unless detail[:header]
-          generator.create_sql_script(data[:path], data[:row], opts)
-          detail[:header] = true
-        end
+        create_converted_header(details, data, opts)
 
         output.write generator.format_row(data[:row], opts)
+      end
+    end
+
+    def create_converted_header(details, data, opts = {})
+      detail = get_file_details(details, data[:path])
+      unless detail[:header] # rubocop:disable Style/GuardClause
+        generator.create_sql_script(data[:path], data[:row], opts)
+        detail[:header] = true
       end
     end
 

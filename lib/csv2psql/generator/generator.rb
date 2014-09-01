@@ -10,7 +10,7 @@ require_relative '../helpers/csv_helper'
 require_relative '../helpers/erb_helper'
 
 module Csv2Psql
-  # Csv2Psql type guesser class
+  # SQL Code generator
   class Generator
     BASE_DIR = File.join(File.dirname(__FILE__), '..', '..', '..')
     TEMPLATE_DIR = File.join(BASE_DIR, 'templates')

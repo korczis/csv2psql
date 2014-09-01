@@ -9,7 +9,7 @@ require_relative '../version'
 require_relative '../helpers/erb_helper'
 
 module Csv2Psql
-  # Csv2Psql type guesser class
+  # Output/writer/executor class
   class Output
     def write(str)
       puts str

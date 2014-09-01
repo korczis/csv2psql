@@ -27,7 +27,7 @@ end
 
 desc 'Run Rubocop'
 task :cop do
-  exec 'rubocop lib/ spec/'
+  exec 'rubocop'
 end
 
 namespace :test do
@@ -36,12 +36,12 @@ namespace :test do
     t.pattern = 'spec/unit/**/*.rb'
   end
 
-  desc "Run coding style tests"
-  RSpec::Core::RakeTask.new(:cop) do |t|
+  desc 'Run coding style tests'
+  RSpec::Core::RakeTask.new(:cop) do |_t|
     Rake::Task['cop'].invoke
   end
 
-  task :all => [:unit, :cop]
+  task all: [:unit, :cop]
 end
 
 desc 'Get all tasks'
@@ -54,8 +54,6 @@ task :usage do
   # puts "No rake task specified so listing them ..."
   # Rake.application['tasklist'].invoke
 end
-task :default => [:usage]
+task default: [:usage]
 
-if $0 == __FILE__
-  Rake.application['usage'].invoke
-end
+Rake.application['usage'].invoke if __FILE__ == $PROGRAM_NAME

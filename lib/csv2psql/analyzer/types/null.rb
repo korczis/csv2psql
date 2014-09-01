@@ -2,8 +2,8 @@
 
 module Csv2Psql
   module Analyzers
-    class Character
-      TYPE = :bigint
+    class Null
+      TYPE = :null
 
       attr_reader :count
 
@@ -12,7 +12,7 @@ module Csv2Psql
       end
 
       def analyze(val)
-        match = val && val.to_s.length == 1
+        match = val.nil? || val.empty?
         return if !match
         @count = @count + 1
       end

@@ -2,6 +2,6 @@
 
 # Csv2Psql module
 module Csv2Psql
-  CODENAME = 'Smelly cat'
-  VERSION = '0.0.7'
+  CODENAME = 'Blurry bat'
+  VERSION = '0.0.8'
 end

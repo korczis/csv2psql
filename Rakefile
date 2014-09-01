@@ -3,7 +3,6 @@
 require 'rubygems'
 
 require 'bundler/setup'
-require 'bundler/gem_tasks'
 
 require 'coveralls/rake/task'
 
@@ -32,6 +31,10 @@ task :cop do
   exec 'rubocop'
 end
 
+namespace :gem do
+  require 'bundler/gem_tasks'
+end
+
 namespace :test do
   desc 'Run unit tests'
   RSpec::Core::RakeTask.new(:unit) do |t|
@@ -44,11 +47,6 @@ namespace :test do
   end
 
   task all: [:unit, :cop]
-end
-
-desc 'Get all tasks'
-task :tasklist do
-  puts Rake.application.tasks
 end
 
 task :usage do

@@ -2,7 +2,7 @@
 
 require_relative '../../lib/csv2psql/cli/cli'
 
-describe Csv2Psql do
+describe 'csv2psql' do
   it 'help' do
     run_cli(['help'])
   end

@@ -2,7 +2,7 @@
 
 require_relative '../../../lib/csv2psql/cli/cli'
 
-describe Csv2Psql do
+describe 'csv2psql convert' do
   it 'help convert' do
     run_cli(%w(help convert))
   end

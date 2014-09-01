@@ -192,6 +192,10 @@ COMMIT;
 
 **Convert CSV - Load CIA Factbook automagically**
 
+```
+csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql
+```
+
 **Analyze CSV - Show as table**
 
 ```
@@ -214,10 +218,6 @@ csv2psql analyze --format=table tmp/sfpd_incident_2013.csv
 | X          | 0      | 0         | 132145  | 0    | 132145 | 0    |
 | Y          | 0      | 0         | 132145  | 0    | 132145 | 0    |
 +------------+--------+-----------+---------+------+--------+------+
-```
-
-```
-csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql
 ```
 
 ## Contributing to csv2psql

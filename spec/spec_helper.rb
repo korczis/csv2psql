@@ -15,6 +15,8 @@ Dir.glob(base + 'helpers/*_helper.rb').each do |file|
 end
 
 RSpec.configure do |config|
+  config.include CliHelper
+
   config.filter_run_excluding :broken => true
 
   config.before(:all) do

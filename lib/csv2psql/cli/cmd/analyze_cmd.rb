@@ -9,9 +9,6 @@ require_relative '../shared'
 require_relative '../../convert/convert'
 require_relative '../../processor/processor'
 
-cmds = {
-}
-
 desc 'Analyze csv file'
 command :analyze do |c|
   c.action do |global_options, options, args|

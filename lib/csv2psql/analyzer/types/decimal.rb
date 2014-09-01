@@ -2,6 +2,7 @@
 
 module Csv2Psql
   module Analyzers
+    # Decimal value matcher
     class Decimal
       TYPE = :decimal
 
@@ -14,11 +15,17 @@ module Csv2Psql
       end
 
       def analyze(val)
-        match = val.is_a?(Float) || (val && val.match(/(\d+[,.]\d+)/))
-        return if match.nil?
+        return unless val.is_a?(Float) || (val && val.match(/(\d+[,.]\d+)/))
 
-        val = val.to_f
-        @count = @count + 1
+        update(convert(val))
+      end
+
+      def convert(val)
+        val.to_f
+      end
+
+      def update(val)
+        @count += 1
         @min = val if @min.nil? || val < @min
         @max = val if @max.nil? || val > @max
       end

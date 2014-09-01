@@ -2,6 +2,7 @@
 
 module Csv2Psql
   module Analyzers
+    # Bigint value matcher
     class Bigint
       TYPE = :bigint
 
@@ -14,11 +15,17 @@ module Csv2Psql
       end
 
       def analyze(val)
-        match = val.is_a?(Integer) || (val && val.match(/^\d+$/))
-        return if match.nil?
+        return unless val.is_a?(Integer) || (val && val.match(/^\d+$/))
 
-        val = val.to_i
-        @count = @count + 1
+        update(convert(val))
+      end
+
+      def convert(val)
+        val.to_i
+      end
+
+      def update(val)
+        @count += 1
         @min = val if @min.nil? || val < @min
         @max = val if @max.nil? || val > @max
       end

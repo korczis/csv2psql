@@ -40,7 +40,6 @@ module Csv2Psql
       analyzer
     end
 
-
     def convert(paths, opts = {})
       file_headers = {}
 

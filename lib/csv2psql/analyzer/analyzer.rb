@@ -69,19 +69,21 @@ module Csv2Psql
       create_column(data, column)
     end
 
+    def load_analyze_class(analyzer_class)
+      Object.const_get('Csv2Psql')
+        .const_get('Analyzers')
+        .const_get(analyzer_class)
+    end
+
     def load_analyzers
       Dir[ANALYZERS_DIR + '**/*.rb'].map do |path|
         fname = File.basename(path, '.rb')
         analyzer_class = fname.camel_case
         require(path)
 
-        klass = Object.const_get('Csv2Psql')
-          .const_get('Analyzers')
-          .const_get(analyzer_class)
-
         {
-          :name => analyzer_class,
-          :class => klass
+          name: analyzer_class,
+          class: load_analyze_class(analyzer_class)
         }
       end
     end

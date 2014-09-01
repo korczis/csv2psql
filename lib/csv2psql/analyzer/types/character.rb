@@ -2,6 +2,7 @@
 
 module Csv2Psql
   module Analyzers
+    # Character value matcher
     class Character
       TYPE = :bigint
 
@@ -13,8 +14,8 @@ module Csv2Psql
 
       def analyze(val)
         match = val && val.to_s.length == 1
-        return if !match
-        @count = @count + 1
+        return unless match
+        @count += 1
       end
     end
   end

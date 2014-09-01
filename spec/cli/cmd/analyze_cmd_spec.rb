@@ -15,6 +15,14 @@ describe 'csv2psql analyze' do
     run_cli(%w(analyze data/sample.csv))
   end
 
+  it 'analyze --delimiter ";" data/sample.csv' do
+    run_cli(%w(analyze --delimiter ";" data/sample_semicolon.csv))
+  end
+
+  it 'analyze --format json data/sample.csv' do
+    run_cli(%w(analyze --format json data/sample.csv))
+  end
+
   it 'analyze --format table data/sample.csv' do
     run_cli(%w(analyze --format table data/sample.csv))
   end

@@ -1,9 +1,12 @@
 # encoding: UTF-8
 
+require 'codeclimate-test-reporter'
 require 'simplecov'
 require 'rspec'
 require 'coveralls'
 require 'pathname'
+
+CodeClimate::TestReporter.start
 
 Coveralls.wear_merged!
 

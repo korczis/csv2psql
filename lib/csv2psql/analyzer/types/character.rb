@@ -5,6 +5,8 @@ module Csv2Psql
     # Character value matcher
     class Character
       TYPE = :bigint
+      CLASS = :character
+      WEIGHT = 2
 
       attr_reader :count
 
@@ -16,6 +18,12 @@ module Csv2Psql
         match = val && val.to_s.length == 1
         return unless match
         @count += 1
+      end
+
+      def to_h
+        {
+          count: @count
+        }
       end
     end
   end

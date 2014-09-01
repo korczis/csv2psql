@@ -5,6 +5,8 @@ module Csv2Psql
     # Decimal value matcher
     class Decimal
       TYPE = :decimal
+      CLASS = :numeric
+      WEIGHT = 3
 
       attr_reader :count, :min, :max
 
@@ -22,6 +24,14 @@ module Csv2Psql
 
       def convert(val)
         val.to_f
+      end
+
+      def to_h
+        {
+          count: @count,
+          min: @min,
+          max: @max
+        }
       end
 
       def update(val)

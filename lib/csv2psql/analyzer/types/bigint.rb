@@ -5,6 +5,8 @@ module Csv2Psql
     # Bigint value matcher
     class Bigint
       TYPE = :bigint
+      CLASS = :numeric
+      WEIGHT = 4
 
       attr_reader :count, :min, :max
 
@@ -22,6 +24,14 @@ module Csv2Psql
 
       def convert(val)
         val.to_i
+      end
+
+      def to_h
+        {
+          count: @count,
+          min: @min,
+          max: @max
+        }
       end
 
       def update(val)

@@ -5,6 +5,8 @@ module Csv2Psql
     # Null value matcher
     class Null
       TYPE = :null
+      CLASS = nil # TODO: Maybe use better class for Null type?
+      WEIGHT = 0
 
       attr_reader :count
 
@@ -16,6 +18,12 @@ module Csv2Psql
         match = val.nil? || val.empty?
         return unless match
         @count += 1
+      end
+
+      def to_h
+        {
+          count: @count
+        }
       end
     end
   end

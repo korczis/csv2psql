@@ -14,4 +14,8 @@ describe Csv2Psql do
   it 'analyze data/sample.csv' do
     run_cli(%w(analyze data/sample.csv))
   end
+
+  it 'analyze --format table data/sample.csv' do
+    run_cli(%w(analyze --format table data/sample.csv))
+  end
 end

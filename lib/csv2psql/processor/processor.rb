@@ -41,17 +41,36 @@ module Csv2Psql
     end
 
     def convert(paths, opts = {})
-      file_headers = {}
+      details = {}
+      get_file_details(details, path)
 
       with_paths(paths, opts) do |data|
         path = data[:path]
         row = data[:row]
-        unless file_headers.key?(path)
+
+        unless details[:header]
           generator.create_sql_script(path, row, opts)
-          file_headers[path] = true
+          details[:header] = true
         end
 
         output.write generator.format_row(row, opts)
+      end
+    end
+
+    def create_file_details(files, path)
+      files[path] = {
+        header: false,
+        lines: 0,
+        line: 0
+      }
+      files[path]
+    end
+
+    def get_file_details(files, path)
+      if files.key?(path)
+        files[path]
+      else
+        create_file_details(files, path)
       end
     end
 

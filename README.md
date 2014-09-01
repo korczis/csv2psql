@@ -48,7 +48,7 @@ csv2psql convert data/sample.csv
 csv2psql help
 
 NAME
-    csv2psql - csv2psql 0.0.7 (Codename: Smelly cat)
+    csv2psql - csv2psql 0.0.9 (Codename: Flying fish)
 
 SYNOPSIS
     csv2psql [global options] command [command options] [arguments...]
@@ -61,9 +61,25 @@ GLOBAL OPTIONS
     -s, --separator=arg - Line separator (default: auto)
 
 COMMANDS
+    analyze - Analyze csv file
     convert - Convert csv file
     help    - Shows a list of commands or help for one command
     version - Print version info
+```
+
+**Analyze help**
+
+```
+csv2psql help analyze
+
+NAME
+    analyze - Analyze csv file
+
+SYNOPSIS
+    csv2psql [global options] analyze [command options]
+
+COMMAND OPTIONS
+    -f, --format=arg - Output format (default: json)
 ```
 
 **Convert help**
@@ -175,6 +191,30 @@ COMMIT;
 ```
 
 **Convert CSV - Load CIA Factbook automagically**
+
+**Analyze CSV - Show as table**
+
+```
+csv2psql analyze --format=table tmp/sfpd_incident_2013.csv
+
++------------+--------+-----------+---------+------+--------+------+
+|                    tmp/sfpd_incident_2013.csv                    |
++------------+--------+-----------+---------+------+--------+------+
+| column     | Bigint | Character | Decimal | Null | String | Uuid |
++------------+--------+-----------+---------+------+--------+------+
+| IncidntNum | 132145 | 0         | 0       | 0    | 132145 | 0    |
+| Category   | 0      | 0         | 0       | 0    | 132145 | 0    |
+| Descript   | 0      | 0         | 0       | 0    | 132145 | 0    |
+| DayOfWeek  | 0      | 0         | 0       | 0    | 132145 | 0    |
+| Date       | 0      | 0         | 0       | 0    | 132145 | 0    |
+| Time       | 0      | 0         | 0       | 0    | 132145 | 0    |
+| PdDistrict | 0      | 0         | 0       | 0    | 132145 | 0    |
+| Resolution | 0      | 0         | 0       | 0    | 132145 | 0    |
+| Location   | 0      | 0         | 0       | 0    | 132145 | 0    |
+| X          | 0      | 0         | 132145  | 0    | 132145 | 0    |
+| Y          | 0      | 0         | 132145  | 0    | 132145 | 0    |
++------------+--------+-----------+---------+------+--------+------+
+```
 
 ```
 csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql

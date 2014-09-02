@@ -1,0 +1,13 @@
+id,Firstname,Lastname,Address.Street,Address.City,Address.Details.Note,Married
+12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available,True
+45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance,False
+12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available,1
+45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance,0
+12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available,blah
+45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance,no
+12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available,"0"
+45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance,"1"
+12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available,"True"
+45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance,"False"
+12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available,"blah"
+45678,Jack,Plumber,"#111 Sutter St, 94104",San Francisco,Korean Deli near to main entrance,"no"

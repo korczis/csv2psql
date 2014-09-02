@@ -1,7 +1,7 @@
 {
     "processor": {
         "delimiter": ",",
-        "header": "true",
+        "header": true,
         "transaction": false,
         "quote": "\""
     }

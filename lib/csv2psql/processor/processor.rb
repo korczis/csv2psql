@@ -70,7 +70,6 @@ module Csv2Psql
 
     def merge_csv_options(opts = {})
       header = !opts['header'].nil? ? opts['header'] : DEFAULT_OPTIONS['header']
-      header = header.downcase == 'true' if header.is_a?(String)
       res = {
         headers: header,
         quote_char: opts['quote'] || DEFAULT_OPTIONS['quote']

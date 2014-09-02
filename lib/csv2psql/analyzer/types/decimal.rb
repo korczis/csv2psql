@@ -7,6 +7,7 @@ module Csv2Psql
       TYPE = :decimal
       CLASS = :numeric
       WEIGHT = 3
+      RE = /[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?/
 
       attr_reader :count, :min, :max
 
@@ -17,7 +18,7 @@ module Csv2Psql
       end
 
       def analyze(val)
-        return unless val.is_a?(Float) || (val && val.match(/(\d+[,.]\d+)/))
+        return unless val.is_a?(Float) || (val && val.match(RE))
 
         update(convert(val))
       end

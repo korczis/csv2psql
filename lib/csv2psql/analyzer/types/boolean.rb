@@ -9,6 +9,10 @@ module Csv2Psql
       WEIGHT = 5
 
       BOOLEAN_VALUES = %w(true false 0 1)
+      BOOLEAN_VALUES_MAP = {}
+      BOOLEAN_VALUES.each do |k|
+        BOOLEAN_VALUES_MAP[k] = true
+      end
 
       attr_reader :count
 
@@ -18,7 +22,7 @@ module Csv2Psql
 
       def analyze(val)
         return if val.nil? || val.empty?
-        return if !BOOLEAN_VALUES.include?(val.downcase)
+        return unless BOOLEAN_VALUES_MAP.key?(val.downcase)
         @count += 1
       end
 

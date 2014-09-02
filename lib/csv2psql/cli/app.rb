@@ -20,13 +20,13 @@ program_desc "csv2psql #{Csv2Psql::VERSION} (Codename: #{Csv2Psql::CODENAME})"
 cmds = {
   h: {
     desc: 'Header row included',
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:header]
+    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS['header']
   },
 
   d: {
     desc: 'Column delimiter',
     type: String,
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:delimiter]
+    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS['delimiter']
   },
 
   l: {
@@ -38,13 +38,13 @@ cmds = {
   q: {
     desc: 'Quoting character',
     type: String,
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:quote]
+    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS['quote']
   },
 
   s: {
     desc: 'Line separator',
     type: String,
-    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS[:separator]
+    default_value: Csv2Psql::Processor::DEFAULT_OPTIONS['separator']
   },
 
   'skip' => {

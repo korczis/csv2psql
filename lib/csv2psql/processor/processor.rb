@@ -1,13 +1,13 @@
 # encoding: UTF-8
 
 require 'csv'
-require 'multi_json'
 require 'pathname'
 require 'pp'
 
 require_relative '../analyzer/analyzer'
 require_relative '../frontend/csv'
 require_relative '../generator/generator'
+require_relative '../helpers/config_helper'
 require_relative '../helpers/csv_helper'
 require_relative '../helpers/erb_helper'
 require_relative '../output/output'
@@ -18,13 +18,7 @@ module Csv2Psql
   class Processor
     attr_reader :analyzer, :generator, :output, :path
 
-    DEFAULT_OPTIONS = {
-      delimiter: ',',
-      header: true,
-      separator: :auto,
-      transaction: false,
-      quote: '"'
-    }
+    DEFAULT_OPTIONS = ConfigHelper.config['processor']
 
     def initialize
       @output = Output.new
@@ -75,13 +69,15 @@ module Csv2Psql
     end
 
     def merge_csv_options(opts = {})
-      header = !opts[:header].nil? ? opts[:header] : DEFAULT_OPTIONS[:header]
-      {
-        col_sep: opts[:delimiter] || DEFAULT_OPTIONS[:delimiter],
+      header = !opts['header'].nil? ? opts['header'] : DEFAULT_OPTIONS['header']
+      header = header.downcase == 'true' if header.is_a?(String)
+      res = {
         headers: header,
-        row_sep: opts[:separator] || DEFAULT_OPTIONS[:separator],
-        quote_char: opts[:quote] || DEFAULT_OPTIONS[:quote]
+        quote_char: opts['quote'] || DEFAULT_OPTIONS['quote']
       }
+      res[:col_sep] = opts['delimiter'] if opts['delimiter']
+      res[:row_sep] = opts['separator'] if opts['separator']
+      res
     end
 
     def with_path(path, opts = {}, &block)

@@ -1,6 +1,5 @@
 # encoding: UTF-8
 
-require 'multi_json'
 require 'pathname'
 require 'pp'
 

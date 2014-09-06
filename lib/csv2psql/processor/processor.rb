@@ -5,6 +5,7 @@ require 'pathname'
 require 'pp'
 
 require_relative '../analyzer/analyzer'
+require_relative '../cache/cache'
 require_relative '../frontend/csv'
 require_relative '../generator/generator'
 require_relative '../helpers/config_helper'
@@ -23,7 +24,8 @@ module Csv2Psql
     def initialize
       @output = Output.new
       @generator = Generator.new(@output)
-      @analyzer = Analyzer.new
+      @cache = Cache.new
+      @analyzer = Analyzer.new(@cahe)
       @frontend = Frontend::Csv.new
     end
 

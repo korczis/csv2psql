@@ -14,8 +14,9 @@ module Csv2Psql
 
     attr_reader :analyzers, :files
 
-    def initialize
+    def initialize(cache = nil)
       @files = {}
+      @cache = cache
       @analyzers = load_analyzers
     end
 

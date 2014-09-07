@@ -4,7 +4,7 @@
 class String
   def camel_case
     return self if self !~ /_/ && self =~ /[A-Z]+.*/
-    split('_').map { |e| e.capitalize }.join
+    split('_').map(&:capitalize).join
   end
 
   def camel_case_lower

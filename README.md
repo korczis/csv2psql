@@ -48,7 +48,7 @@ csv2psql convert data/sample.csv
 csv2psql help
 
 NAME
-    csv2psql - csv2psql 0.0.9 (Codename: Flying fish)
+    csv2psql - csv2psql 0.0.11 (Codename: Famous rat)
 
 SYNOPSIS
     csv2psql [global options] command [command options] [arguments...]
@@ -57,8 +57,10 @@ GLOBAL OPTIONS
     -d, --delimiter=arg - Column delimiter (default: ,)
     -h, --[no-]header   - Header row included (default: enabled)
     --help              - Show this message
+    -l, --limit=arg     - How many rows process (default: -1)
     -q, --quote=arg     - Quoting character (default: ")
-    -s, --separator=arg - Line separator (default: auto)
+    -s, --separator=arg - Line separator (default: none)
+    --skip=arg          - How many rows skip (default: -1)
 
 COMMANDS
     analyze - Analyze csv file

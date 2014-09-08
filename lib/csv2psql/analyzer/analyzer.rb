@@ -29,11 +29,16 @@ module Csv2Psql
       data[:lines] = data[:lines] + 1
     end
 
-    def analyze_column(analyzer, val)
-      res = cached_result(val) do
-        analyzer[:class].analyze(val)
-      end
+    def analyze_column(analyzer, val, opts = { :use_cache => false })
+      # if opts[:use_cache]
+      #   res = cached_result(val) do
+      #     analyzer[:class].analyze(val)
+      #   end
+      # else
+      #   res = analyzer[:class].analyze(val)
+      # end
 
+      res = analyzer[:class].analyze(val)
       update_results(analyzer, res, val) if res
     end
 
@@ -47,7 +52,12 @@ module Csv2Psql
     end
 
     def cached_result(val, &block)
-      block.call(val) if block_given?
+      res = @cache.get(val)
+      if res.nil?
+        res = block.call(val)
+        @cache.put(val, res)
+      end
+      res
     end
 
     # Create column analyzers

@@ -2,6 +2,8 @@
 
 Tool for transforming CSV into SQL statements
 
+See **[examples](https://gist.github.com/korczis/2f7f54c7bd53554f44df)**
+
 *Formalities*
 
 - [License](https://github.com/korczis/csv2psql/blob/master/LICENSE)

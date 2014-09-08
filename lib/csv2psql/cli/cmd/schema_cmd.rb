@@ -28,7 +28,7 @@ Csv2Psql::Cli.module_eval do
         v[:table] = 'my_table'
         ctx = v
         erb = Csv2Psql::ErbHelper.new
-        res += "\n" if !res.empty?
+        res += "\n" unless res.empty?
         res += erb.process(SCHEMA_TEMPLATE, ctx)
       end
       res

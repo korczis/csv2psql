@@ -1,7 +1,7 @@
 CREATE TABLE <%= ctx[:table] %>
 (
 <% ctx[:columns].each_with_index do |item, index| %>
-	"<%= Generator.sanitize_header(item[0]) %>" <%= item[1][:type] %><% if !item[1][:null] %> NOT NULL<% end %><%= ', ' if index < ctx[:columns].length - 1%>
+	"<%= Generator.sanitize_header(item[0]) %>" <%= item[1][:type].upcase %><% if !item[1][:null] %> NOT NULL<% end %><%= ', ' if index < ctx[:columns].length - 1%>
 
 <% end %>
 )

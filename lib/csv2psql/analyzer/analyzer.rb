@@ -29,8 +29,11 @@ module Csv2Psql
       data[:lines] = data[:lines] + 1
     end
 
-    def analyze_header(analyzer, val)
-      res = analyzer[:class].analyze(val)
+    def analyze_column(analyzer, val)
+      res = cached_result(val) do
+        analyzer[:class].analyze(val)
+      end
+
       update_results(analyzer, res, val) if res
     end
 
@@ -38,9 +41,13 @@ module Csv2Psql
       header.each do |h|
         col = get_column(data, h)
         col.each do |_name, analyzer|
-          analyze_header(analyzer, row[h])
+          analyze_column(analyzer, row[h])
         end
       end
+    end
+
+    def cached_result(val, &block)
+      block.call(val) if block_given?
     end
 
     # Create column analyzers
@@ -94,8 +101,8 @@ module Csv2Psql
 
     def load_analyze_class(analyzer_class)
       Object.const_get('Csv2Psql')
-        .const_get('Analyzers')
-        .const_get(analyzer_class)
+      .const_get('Analyzers')
+      .const_get(analyzer_class)
     end
 
     def load_analyzers

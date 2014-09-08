@@ -81,14 +81,26 @@ module Csv2Psql
       res
     end
 
+    def process_file(path, csv, opts, &block)
+      lines = 0
+      limit = opts[:l]
+      skip = opts[:skip]
+      csv.each do |row|
+        lines += 1
+        next if skip > 0 && lines <= skip
+
+        with_row(path, row, opts, &block)
+
+        return if limit > 0 && lines >= limit
+      end
+    end
+
     def with_path(path, opts = {}, &block)
       output.write 'BEGIN;' if opts[:transaction]
       csv_opts = merge_csv_options(opts)
       @first_row = true
       @frontend.open(path, 'rt', csv_opts) do |csv|
-        csv.each do |row|
-          with_row(path, row, opts, &block)
-        end
+        process_file(path, csv, opts, &block)
       end
       output.write 'COMMIT;' if opts[:transaction]
     end

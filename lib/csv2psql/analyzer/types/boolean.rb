@@ -1,9 +1,11 @@
 # encoding: UTF-8
 
+require_relative 'base_analyzer'
+
 module Csv2Psql
   module Analyzers
     # Bolean value matcher
-    class Boolean
+    class Boolean < BaseAnalyzer
       TYPE = :boolean
       CLASS = :boolean
       WEIGHT = 5
@@ -14,13 +16,15 @@ module Csv2Psql
         BOOLEAN_VALUES_MAP[k] = true
       end
 
-      def analyze(val)
-        return if val.nil? || val.empty?
-        BOOLEAN_VALUES_MAP.key?(val.downcase)
-      end
+      class << self
+        def analyze(val)
+          return if val.nil? || val.empty?
+          BOOLEAN_VALUES_MAP.key?(val.downcase)
+        end
 
-      def convert(val)
-        val.to_i
+        def convert(val)
+          val.to_i
+        end
       end
     end
   end

@@ -8,9 +8,10 @@ require_relative '../extensions/string'
 
 module Csv2Psql
   # Analyzer file analyzer class
-  class Analyzer
+  class Analyzer # rubocop:disable Metrics/ClassLength
     DEFAULT_OPTIONS = {}
     ANALYZERS_DIR = File.join(File.dirname(__FILE__), 'types')
+    EXCLUDED_ANALYZERS = ['base_analyzer']
 
     attr_reader :analyzers, :files
 
@@ -90,8 +91,8 @@ module Csv2Psql
         count: 0
       }
 
-      res[:min] = nil if analyzer_class.const_get(:CLASS) == :numeric
-      res[:max] = nil if analyzer_class.const_get(:CLASS) == :numeric
+      res[:min] = nil if analyzer_class.numeric?
+      res[:max] = nil if analyzer_class.numeric?
 
       res
     end
@@ -109,28 +110,49 @@ module Csv2Psql
       create_column(data, column)
     end
 
-    def load_analyze_class(analyzer_class)
+    def load_analyzer_class(analyzer_class)
       Object.const_get('Csv2Psql')
       .const_get('Analyzers')
       .const_get(analyzer_class)
     end
 
-    def load_analyzers
-      Dir[ANALYZERS_DIR + '**/*.rb'].map do |path|
-        fname = File.basename(path, '.rb')
-        analyzer_class = fname.camel_case
-        require(path)
+    def load_analyzer(path)
+      fname = File.basename(path, '.rb')
+      analyzer_class = fname.camel_case
+      require(path)
 
-        {
-          name: analyzer_class,
-          class: load_analyze_class(analyzer_class)
-        }
-      end
+      {
+        name: analyzer_class,
+        class: load_analyzer_class(analyzer_class)
+      }
     end
 
-    def update_results(analyzer, _res, _val)
+    def load_analyzers
+      res = Dir[ANALYZERS_DIR + '**/*.rb'].map do |path|
+        name = File.basename(path, '.rb')
+        next if EXCLUDED_ANALYZERS.include?(name)
+        load_analyzer(path)
+      end
+
+      res.compact
+    end
+
+    # Update numeric results
+    # @param ac analyzer class
+    # @param ar analyzer results
+    # @param val value to be analyzed
+    def update_numeric_results(ac, ar, val)
+      cval = ac.convert(val)
+      ar[:min] = cval if ar[:min].nil? || cval < ar[:min]
+      ar[:max] = cval if ar[:max].nil? || cval > ar[:max]
+    end
+
+    def update_results(analyzer, res, val)
+      ac = analyzer[:class]
       ar = analyzer[:results]
       ar[:count] += 1
+
+      update_numeric_results(ac, ar, val) if res && ac.numeric?
     end
   end
 end

@@ -17,7 +17,7 @@ Csv2Psql::Cli.module_eval do
       res.files.each do |_fname, results|
         results[:columns].each do |_k, v|
           v.each do |d, det|
-            v[d] = det.to_h
+            v[d] = det[:results]
           end
         end
       end
@@ -30,7 +30,7 @@ Csv2Psql::Cli.module_eval do
         header = ['column'] + res.analyzers.map { |a| a[:name] }
 
         rows = details[:columns].map do |k, v|
-          [k] + v.keys.map { |name| v[name].count }
+          [k] + v.keys.map { |name| v[name][:results][:count] }
         end
 
         Terminal::Table.new title: file, headings: header, rows: rows

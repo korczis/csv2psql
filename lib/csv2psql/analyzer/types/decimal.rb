@@ -9,36 +9,8 @@ module Csv2Psql
       WEIGHT = 3
       RE = /[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?/
 
-      attr_reader :count, :min, :max
-
-      def initialize
-        @count = 0
-        @min = nil
-        @max = nil
-      end
-
       def analyze(val)
-        return unless val.is_a?(Float) || (val && val.match(RE))
-
-        update(convert(val))
-      end
-
-      def convert(val)
-        val.to_f
-      end
-
-      def to_h
-        {
-          count: @count,
-          min: @min,
-          max: @max
-        }
-      end
-
-      def update(val)
-        @count += 1
-        @min = val if @min.nil? || val < @min
-        @max = val if @max.nil? || val > @max
+        val.is_a?(Float) || (val && !val.match(RE).nil?)
       end
     end
   end

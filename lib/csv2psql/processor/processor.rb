@@ -25,7 +25,7 @@ module Csv2Psql
       @output = Output.new
       @generator = Generator.new(@output)
       @cache = Cache.new
-      @analyzer = Analyzer.new(@cahe)
+      @analyzer = Analyzer.new(@cache)
       @frontend = Frontend::Csv.new
     end
 

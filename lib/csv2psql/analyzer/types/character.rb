@@ -8,22 +8,8 @@ module Csv2Psql
       CLASS = :character
       WEIGHT = 2
 
-      attr_reader :count
-
-      def initialize
-        @count = 0
-      end
-
       def analyze(val)
-        match = val && val.to_s.length == 1
-        return unless match
-        @count += 1
-      end
-
-      def to_h
-        {
-          count: @count
-        }
+        val && val.to_s.length == 1
       end
     end
   end

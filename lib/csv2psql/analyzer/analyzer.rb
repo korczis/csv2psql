@@ -24,23 +24,36 @@ module Csv2Psql
       data = get_data(path)
 
       header = CsvHelper.get_header(row, opts)
-      header.each do |h|
-        col = get_column(data, h)
-        val = row[h]
-        col.each do |_name, analyzer|
-          analyzer.analyze(val)
-        end
-      end
+      analyze_row(header, row, data)
 
       data[:lines] = data[:lines] + 1
     end
 
+    def analyze_header(analyzer, val)
+      res = analyzer[:class].analyze(val)
+      update_results(analyzer, res, val) if res
+    end
+
+    def analyze_row(header, row, data)
+      header.each do |h|
+        col = get_column(data, h)
+        col.each do |_name, analyzer|
+          analyze_header(analyzer, row[h])
+        end
+      end
+    end
+
+    # Create column analyzers
     def create_column(data, column)
       data[:columns][column] = {}
       res = data[:columns][column]
 
       analyzers.each do |analyzer|
-        res[analyzer[:name]] = analyzer[:class].new
+        analyzer_class = analyzer[:class]
+        res[analyzer[:name]] = {
+          class: analyzer_class.new,
+          results: create_results(analyzer_class)
+        }
       end
 
       res
@@ -53,6 +66,17 @@ module Csv2Psql
         lines: 0
       }
       files[path]
+    end
+
+    def create_results(analyzer_class)
+      res = {
+        count: 0
+      }
+
+      res[:min] = nil if analyzer_class.const_get(:CLASS) == :numeric
+      res[:max] = nil if analyzer_class.const_get(:CLASS) == :numeric
+
+      res
     end
 
     def get_data(path)
@@ -85,6 +109,11 @@ module Csv2Psql
           class: load_analyze_class(analyzer_class)
         }
       end
+    end
+
+    def update_results(analyzer, _res, _val)
+      ar = analyzer[:results]
+      ar[:count] += 1
     end
   end
 end

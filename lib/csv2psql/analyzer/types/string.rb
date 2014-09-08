@@ -6,7 +6,7 @@ module Csv2Psql
   module Analyzers
     # UUID value matcher
     class String < BaseAnalyzer
-      TYPE = :string
+      TYPE = :text
       CLASS = :character
       WEIGHT = 1
 

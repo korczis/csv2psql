@@ -54,13 +54,14 @@ Csv2Psql::Cli.module_eval do
       fail ArgumentError, 'No file to analyze specified' if args.empty?
 
       opts = {}.merge(global_options).merge(options)
-      res = Csv2Psql::Convert.analyze(args, opts)
 
       formater = formats[opts[:format]]
       if formater.nil?
         fmters = formats.keys.join(', ')
         fail ArgumentError, "Wrong formatter specified, can be: #{fmters}"
       end
+
+      res = Csv2Psql::Convert.analyze(args, opts)
 
       output = formater.call(res)
       if output.is_a?(Array)

@@ -24,13 +24,24 @@ module Csv2Psql
         analyzers[sorted.last[0]]
       end
 
+      def format_result(analysis, lines)
+        res = { columns: {} }
+        analysis.each do |k, v|
+          res[:columns][k] = {
+            type: v[:class].sql_type,
+            null: v[:results][:count] != lines
+          }
+        end
+        res
+      end
+
       def generate(analysis, _opts = {})
         res = {}
         analysis[:columns].each do |name, analyzers|
           analyzer = select_best(analyzers, analysis[:lines])
           res[name] = analyzer
         end
-        res
+        format_result(res, analysis[:lines])
       end
     end
   end

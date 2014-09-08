@@ -1,0 +1,11 @@
+CREATE TABLE <%= ctx[:table] %>
+(
+<% ctx[:columns].each_with_index do |item, index| %>
+	<%= item %> TEXT<%= ", " if index < ctx[:columns].length - 1%>
+
+<% end %>
+)
+WITH (
+  OIDS=FALSE
+);
+

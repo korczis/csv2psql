@@ -11,7 +11,7 @@ module CliHelper
     original_stdout = $stdout
     $stdout = fake = StringIO.new
     begin
-      block.call if block_given?
+      Proc.new.call if block_given?
     ensure
       $stdout = original_stdout
     end

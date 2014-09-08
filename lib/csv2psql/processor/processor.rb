@@ -102,7 +102,7 @@ module Csv2Psql
 
     def with_row(path, row, _opts = {}, &block)
       args = { path: path, row: row }
-      block.call(args) if block_given?
+      Proc.new.call(args)
     end
   end
 end

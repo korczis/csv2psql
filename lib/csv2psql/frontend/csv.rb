@@ -11,7 +11,7 @@ module Csv2Psql
     class Csv < Base
       def open(path, open_opts = 'rt', csv_opts = {}, &block)
         CSV.open(path, open_opts, csv_opts) do |csv|
-          block.call(csv) if block_given?
+          Proc.new.call(csv)
         end
       end
     end

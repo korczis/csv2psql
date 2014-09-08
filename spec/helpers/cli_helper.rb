@@ -7,7 +7,7 @@ module CliHelper
   # Execute block and capture its stdou
   # @param block Block to be executed with stdout redirected
   # @returns Captured output as string
-  def capture_stdout(&block)
+  def capture_stdout(&_block)
     original_stdout = $stdout
     $stdout = fake = StringIO.new
     begin

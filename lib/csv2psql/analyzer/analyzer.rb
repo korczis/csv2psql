@@ -52,7 +52,7 @@ module Csv2Psql
       end
     end
 
-    def cached_result(val, &block)
+    def cached_result(val, &_block)
       res = @cache.get(val)
       if res.nil?
         res = Proc.new.call(val)

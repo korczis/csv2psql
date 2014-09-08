@@ -9,7 +9,7 @@ module Csv2Psql
   module Frontend
     # Csv frontend class
     class Csv < Base
-      def open(path, open_opts = 'rt', csv_opts = {}, &block)
+      def open(path, open_opts = 'rt', csv_opts = {}, &_block)
         CSV.open(path, open_opts, csv_opts) do |csv|
           Proc.new.call(csv)
         end

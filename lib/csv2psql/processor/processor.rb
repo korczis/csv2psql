@@ -100,7 +100,7 @@ module Csv2Psql
       end
     end
 
-    def with_row(path, row, _opts = {}, &block)
+    def with_row(path, row, _opts = {}, &_block)
       args = { path: path, row: row }
       Proc.new.call(args)
     end

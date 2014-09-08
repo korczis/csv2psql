@@ -48,7 +48,7 @@ csv2psql convert data/sample.csv
 csv2psql help
 
 NAME
-    csv2psql - csv2psql 0.0.11 (Codename: Famous rat)
+    csv2psql - csv2psql 0.0.12 (Codename: Prudent owl)
 
 SYNOPSIS
     csv2psql [global options] command [command options] [arguments...]
@@ -66,8 +66,8 @@ COMMANDS
     analyze - Analyze csv file
     convert - Convert csv file
     help    - Shows a list of commands or help for one command
-    version - Print version info
-```
+    schema  - Generate schema for file
+    version - Print version info```
 
 **Analyze help**
 
@@ -101,6 +101,21 @@ COMMAND OPTIONS
     -t, --table=arg       - Table to insert to (default: none)
     --[no-]transaction    - Import in transaction block (default: enabled)
     --[no-]truncate-table - Truncate SQL Table before inserts
+```
+
+**Schema help**
+
+```
+csv2psql help schema
+
+NAME
+    schema - Generate schema for file
+
+SYNOPSIS
+    csv2psql [global options] schema [command options]
+
+COMMAND OPTIONS
+    -f, --format=arg - Output format (default: json)
 ```
 
 ## Example
@@ -220,6 +235,67 @@ csv2psql analyze --format=table tmp/sfpd_incident_2013.csv
 | X          | 0      | 0         | 132145  | 0    | 132145 | 0    |
 | Y          | 0      | 0         | 132145  | 0    | 132145 | 0    |
 +------------+--------+-----------+---------+------+--------+------+
+```
+
+**Schema guess**
+
+```
+csv2psql schema -f table ./data/census_SFOH_2010.csv
+
++-------------------------------------------------+---------+---------+
+|                     ./data/census_SFOH_2010.csv                     |
++-------------------------------------------------+---------+---------+
+| column                                          | type    | null    |
++-------------------------------------------------+---------+---------+
+| MSA                                             | text    | false   |
+| Tract ID                                        | bigint  | false   |
+| White Alone                                     | bigint  | false   |
+| Black or African American alone                 | bigint  | false   |
+| Asian alone                                     | bigint  | false   |
+| Family Households                               | bigint  | false   |
+| Nonfamily Households                            | bigint  | false   |
+| Household income: < 10k                         | bigint  | false   |
+| Household income: 10-15k                        | bigint  | false   |
+| Household income: 15-20k                        | bigint  | false   |
+| Household income: 20-25k                        | bigint  | false   |
+| Household income: 25-30k                        | bigint  | false   |
+| Household income: 30-35k                        | bigint  | false   |
+| Household income: 35-40k                        | bigint  | false   |
+| Household income: 40-45k                        | bigint  | false   |
+| Household income: 45-50k                        | bigint  | false   |
+| Household income: 50-60k                        | bigint  | false   |
+| Household income: 60-75k                        | bigint  | false   |
+| Household income: 75-100k                       | bigint  | false   |
+| Household income: 100-125k                      | bigint  | false   |
+| Household income: 125-150k                      | bigint  | false   |
+| Household income: 150-200k                      | bigint  | false   |
+| Household income: > 200k                        | bigint  | false   |
+| With wage or salary income                      | bigint  | false   |
+| No wage or salary income                        | bigint  | false   |
+| With self-employment income                     | bigint  | false   |
+| No self-employment income                       | bigint  | false   |
+| With interest dividends or net rental income    | bigint  | false   |
+| No interest dividends or net rental income      | bigint  | false   |
+| With Social Security income                     | bigint  | false   |
+| No Social Security income                       | bigint  | false   |
+| With Supplemental Security Income (SSI)         | bigint  | false   |
+| No Supplemental Security Income (SSI)           | bigint  | false   |
+| With public assistance income                   | bigint  | false   |
+| No public assistance income                     | bigint  | false   |
+| With cash public assistance or Food Stamps/SNAP | bigint  | false   |
+| No cash public assistance or Food Stamps/SNAP   | bigint  | false   |
+| With retirement income                          | bigint  | false   |
+| No retirement income                            | bigint  | false   |
+| Per capita income (2010 dollars)                | bigint  | true    |
+| Housing units                                   | bigint  | false   |
+| Occupancy status: Occupied                      | bigint  | false   |
+| Occupancy status: Vacant                        | bigint  | false   |
+| Housing tenure: Owner-occupied                  | bigint  | false   |
+| Housing tenure: Renter-occupied                 | bigint  | false   |
+| Median number of rooms                          | decimal | true    |
+| Median gross rent (dollars)                     | bigint  | true    |
+| Median value for owner-occupied housing         | bigint  | true    |
++-------------------------------------------------+---------+---------+
 ```
 
 ## Contributing to csv2psql

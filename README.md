@@ -68,6 +68,7 @@ COMMANDS
     help    - Shows a list of commands or help for one command
     schema  - Generate schema for file
     version - Print version info```
+```
 
 **Analyze help**
 

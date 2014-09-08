@@ -7,7 +7,7 @@ module Csv2Psql
     # UUID value matcher
     class Uuid < BaseAnalyzer
       TYPE = :uuid
-      CLASS = :uuid
+      CLASS = :special
       WEIGHT = 5
 
       RE = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}$/ # rubocop:disable Metrics/LineLength

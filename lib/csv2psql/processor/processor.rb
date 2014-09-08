@@ -12,6 +12,7 @@ require_relative '../helpers/config_helper'
 require_relative '../helpers/csv_helper'
 require_relative '../helpers/erb_helper'
 require_relative '../output/output'
+require_relative '../schema/schema_generator'
 require_relative '../version'
 
 module Csv2Psql
@@ -30,7 +31,7 @@ module Csv2Psql
     end
 
     def analyze(paths, opts = {})
-      with_paths(paths, opts) do |data|
+      with_files(paths, opts) do |data|
         analyzer.analyze(data[:path], data[:row], opts)
       end
       analyzer
@@ -38,9 +39,8 @@ module Csv2Psql
 
     def convert(paths, opts = {})
       details = {}
-      with_paths(paths, opts) do |data|
+      with_files(paths, opts) do |data|
         create_converted_header(details, data, opts)
-
         output.write generator.format_row(data[:row], opts)
       end
     end
@@ -60,6 +60,19 @@ module Csv2Psql
         line: 0
       }
       files[path]
+    end
+
+    def generate_schema(paths, opts = {})
+      res = {}
+      paths.each do |path|
+        with_file(path, opts) do |data|
+          path = data[:path]
+          analyzer.analyze(path, data[:row], opts)
+        end
+
+        res[path] = SchemaGenerator.generate(analyzer.files[path])
+      end
+      res
     end
 
     def get_file_details(files, path)
@@ -95,7 +108,7 @@ module Csv2Psql
       end
     end
 
-    def with_path(path, opts = {}, &block)
+    def with_file(path, opts = {}, &block)
       output.write 'BEGIN;' if opts[:transaction]
       csv_opts = merge_csv_options(opts)
       @first_row = true
@@ -105,10 +118,10 @@ module Csv2Psql
       output.write 'COMMIT;' if opts[:transaction]
     end
 
-    def with_paths(paths, opts = {}, &block)
+    def with_files(paths, opts = {}, &block)
       paths = [paths] unless paths.is_a?(Array)
       paths.each do |path|
-        with_path(path, opts, &block)
+        with_file(path, opts, &block)
       end
     end
 

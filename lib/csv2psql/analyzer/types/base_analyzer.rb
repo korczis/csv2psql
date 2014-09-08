@@ -16,7 +16,31 @@ module Csv2Psql
         end
 
         def numeric?
-          const_get('CLASS') == :numeric
+          sql_class?(:numeric)
+        end
+
+        def sql_class?(class_name)
+          const_get('CLASS') == class_name
+        end
+
+        def sql_class
+          const_get('CLASS')
+        end
+
+        def sql_class?(class_name)
+          sql_class == class_name
+        end
+
+        def sql_type
+          const_get('TYPE')
+        end
+
+        def sql_type?(type_name)
+          sql_type == type_name
+        end
+
+        def weight
+          const_get('WEIGHT')
         end
       end
 
@@ -30,6 +54,26 @@ module Csv2Psql
 
       def numeric?
         self.class.numeric?
+      end
+
+      def sql_class
+        self.class.sql_class
+      end
+
+      def sql_class?(class_name)
+        self.class.sql_class?(class_name)
+      end
+
+      def sql_type
+        self.class.sql_type
+      end
+
+      def sql_type?(type_name)
+        self.class.sql_type?(type_name)
+      end
+
+      def weight
+        self.class.weight
       end
     end
   end

@@ -7,7 +7,7 @@ module Csv2Psql
     # Null value matcher
     class Null < BaseAnalyzer
       TYPE = :null
-      CLASS = nil # TODO: Maybe use better class for Null type?
+      CLASS = :null
       WEIGHT = 0
 
       class << self

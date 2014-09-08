@@ -7,7 +7,7 @@ module Csv2Psql
     # Bolean value matcher
     class Boolean < BaseAnalyzer
       TYPE = :boolean
-      CLASS = :boolean
+      CLASS = :special
       WEIGHT = 5
 
       BOOLEAN_VALUES = %w(true false 0 1)

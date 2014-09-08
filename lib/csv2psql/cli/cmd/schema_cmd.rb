@@ -9,12 +9,29 @@ include GLI::App
 
 require_relative '../shared'
 require_relative '../../convert/convert'
+require_relative '../../helpers/erb_helper'
 require_relative '../../processor/processor'
 
 Csv2Psql::Cli.module_eval do
+  BASE_DIR = File.join(File.dirname(__FILE__), '..', '..', '..', '..')
+  TEMPLATE_DIR = File.join(BASE_DIR, 'templates')
+  SCHEMA_TEMPLATE = File.join(TEMPLATE_DIR, 'schema.sql.erb')
+
   formats = {
     'json' => lambda do |res|
       JSON.pretty_generate(res)
+    end,
+
+    'sql' => lambda do |data|
+      res = ''
+      data.each do |_k, v|
+        v[:table] = 'my_table'
+        ctx = v
+        erb = Csv2Psql::ErbHelper.new
+        res += "\n" if !res.empty?
+        res += erb.process(SCHEMA_TEMPLATE, ctx)
+      end
+      res
     end,
 
     'table' => lambda do |res|

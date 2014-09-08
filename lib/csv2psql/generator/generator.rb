@@ -32,6 +32,17 @@ module Csv2Psql
 
     attr_reader :output
 
+    class << self
+      def sanitize_header(header_column)
+        header_column.downcase.gsub(/[^0-9a-z]/i, '_')
+      end
+
+      def sanitize_value(value)
+        value ||= ''
+        value.gsub("'", "''")
+      end
+    end
+
     def initialize(output)
       @output = output
     end
@@ -90,7 +101,7 @@ module Csv2Psql
 
     def get_columns(row, opts = {}, header = get_header(row, opts))
       if opts[:header]
-        header.map { |h| sanitize_header(h) }
+        header.map { |h| Generator.sanitize_header(h) }
       else
         row.map.with_index do |_item, i|
           "col_#{i}"
@@ -101,18 +112,9 @@ module Csv2Psql
     def get_values(row, opts = {}, header = get_header(row, opts))
       header.map do |h|
         value = row[h]
-        sanitized_value = sanitize_value(value)
+        sanitized_value = Generator.sanitize_value(value)
         "'#{sanitized_value}'"
       end
-    end
-
-    def sanitize_header(header_column)
-      header_column.downcase.gsub(/[^0-9a-z]/i, '_')
-    end
-
-    def sanitize_value(value)
-      value ||= ''
-      value.gsub("'", "''")
     end
 
     def truncate_table(path, row, opts = {})

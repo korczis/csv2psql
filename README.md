@@ -47,13 +47,15 @@ csv2psql convert data/sample.csv
 **Global help**
 
 ```
-csv2psql help
-
+$ csv2psql
 NAME
-    csv2psql - csv2psql 0.0.12 (Codename: Prudent owl)
+    csv2psql - Tool for converting CSV files to PSQL statements
 
 SYNOPSIS
     csv2psql [global options] command [command options] [arguments...]
+
+VERSION
+    0.0.15
 
 GLOBAL OPTIONS
     -d, --delimiter=arg - Column delimiter (default: ,)
@@ -63,20 +65,20 @@ GLOBAL OPTIONS
     -q, --quote=arg     - Quoting character (default: ")
     -s, --separator=arg - Line separator (default: none)
     --skip=arg          - How many rows skip (default: -1)
+    --version           - Display the program version
 
 COMMANDS
     analyze - Analyze csv file
     convert - Convert csv file
     help    - Shows a list of commands or help for one command
     schema  - Generate schema for file
-    version - Print version info```
+    version - Print version info
 ```
 
 **Analyze help**
 
 ```
-csv2psql help analyze
-
+$ csv2psql help analyze
 NAME
     analyze - Analyze csv file
 
@@ -84,14 +86,13 @@ SYNOPSIS
     csv2psql [global options] analyze [command options]
 
 COMMAND OPTIONS
-    -f, --format=arg - Output format (default: json)
+    -f, --format=arg - Output format json, table (default: json)
 ```
 
 **Convert help**
 
 ```
-csv2psql help convert
-
+$ csv2psql help convert
 NAME
     convert - Convert csv file
 
@@ -102,15 +103,14 @@ COMMAND OPTIONS
     --[no-]create-table   - Crate SQL Table before inserts
     --[no-]drop-table     - Drop SQL Table before inserts
     -t, --table=arg       - Table to insert to (default: none)
-    --[no-]transaction    - Import in transaction block (default: enabled)
+    --[no-]transaction    - Import in transaction block
     --[no-]truncate-table - Truncate SQL Table before inserts
 ```
 
 **Schema help**
 
 ```
-csv2psql help schema
-
+$ csv2psql help schema
 NAME
     schema - Generate schema for file
 
@@ -118,7 +118,7 @@ SYNOPSIS
     csv2psql [global options] schema [command options]
 
 COMMAND OPTIONS
-    -f, --format=arg - Output format (default: json)
+    -f, --format=arg - Output format - json, sql, table (default: json)
 ```
 
 ## Example

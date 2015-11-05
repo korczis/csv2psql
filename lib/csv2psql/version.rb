@@ -2,6 +2,6 @@
 
 # Csv2Psql module
 module Csv2Psql
-  CODENAME = 'Lazy dolphin'
-  VERSION = '0.0.12'
+  CODENAME = 'Reborn turtle'
+  VERSION = '0.0.13'
 end

@@ -7,7 +7,9 @@ require_relative '../processor/processor'
 
 include GLI::App
 
-program_desc "csv2psql #{Csv2Psql::VERSION} (Codename: #{Csv2Psql::CODENAME})"
+version Csv2Psql::VERSION
+
+program_desc 'Tool for converting CSV files to PSQL statements'
 
 cmds = {
   h: {

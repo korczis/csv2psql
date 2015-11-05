@@ -10,7 +10,7 @@ require_relative '../helpers/erb_helper'
 module Csv2Psql
   # SQL Code generator
   class Generator
-    BASE_DIR = File.join(File.dirname(__FILE__), '..', '..', '..')
+    BASE_DIR = File.join(File.dirname(__FILE__), '..')
     TEMPLATE_DIR = File.join(BASE_DIR, 'templates')
     CREATE_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'create_table.sql.erb')
     DROP_TABLE_TEMPLATE = File.join(TEMPLATE_DIR, 'drop_table.sql.erb')

@@ -33,7 +33,7 @@ See **[examples](https://gist.github.com/korczis/2f7f54c7bd53554f44df)**
 ## Getting started 
 
 ```
-gem install csv2psql
+$ gem install csv2psql
 ```
 
 ## Usage
@@ -41,7 +41,7 @@ gem install csv2psql
 **Simple conversion**
 
 ```
-csv2psql convert data/sample.csv
+$ csv2psql convert data/sample.csv
 ```
 
 **Global help**
@@ -126,7 +126,7 @@ COMMAND OPTIONS
 **Input CSV**
 
 ```
-cat data/sample.csv
+$ cat data/sample.csv
 
 id,Firstname,Lastname,Address.Street,Address.City,Address.Details.Note
 12345,Joe,Doe,"#2140 Taylor Street, 94133",San Francisco,Pool available
@@ -136,7 +136,7 @@ id,Firstname,Lastname,Address.Street,Address.City,Address.Details.Note
 **Convert CSV**
 
 ```
-csv2psql convert data/sample.csv
+$ csv2psql convert data/sample.csv
 
 BEGIN;
 -- Table: my_table
@@ -149,7 +149,7 @@ COMMIT;
 **Convert CSV - Create table**
 
 ```
-csv2psql convert --create-table -t pokus data/sample.csv
+$ csv2psql convert --create-table -t pokus data/sample.csv
 
 BEGIN;
 -- Table: pokus
@@ -174,7 +174,7 @@ COMMIT;
 **Convert CSV - Stream directly to Postgres client (psql)**
 
 ```
-csv2psql convert --create-table -t hokus data/sample.csv | psql
+$ csv2psql convert --create-table -t hokus data/sample.csv | psql
 
 BEGIN
 CREATE TABLE
@@ -183,10 +183,17 @@ INSERT 0 1
 COMMIT
 ```
 
+```
+$ csv2psql convert --create-table -t hokus data/sample.csv | psql -h 127.0.0.1 -U jetel
+Password for user jetel:
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+```
 **Convert CSV - Full load**
 
 ```
-csv2psql convert --create-table --drop-table --truncate-table -t test data/sample.csv
+$ csv2psql convert --create-table --drop-table --truncate-table -t test data/sample.csv
 
 BEGIN;
 DROP TABLE IF EXISTS test;
@@ -213,13 +220,13 @@ COMMIT;
 **Convert CSV - Load CIA Factbook automagically**
 
 ```
-csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql
+$ csv2psql convert --create-table --drop-table --truncate-table --no-transaction -t test data/cia-data-all.csv | psql
 ```
 
 **Analyze CSV - Show as table**
 
 ```
-csv2psql analyze --format=table tmp/sfpd_incident_2013.csv
+$ csv2psql analyze --format=table tmp/sfpd_incident_2013.csv
 
 +------------+--------+-----------+---------+------+--------+------+
 |                    tmp/sfpd_incident_2013.csv                    |
@@ -243,7 +250,7 @@ csv2psql analyze --format=table tmp/sfpd_incident_2013.csv
 **Schema guess**
 
 ```
-csv2psql schema -f table ./data/census_SFOH_2010.csv
+$ csv2psql schema -f table ./data/census_SFOH_2010.csv
 
 +-------------------------------------------------+---------+---------+
 |                     ./data/census_SFOH_2010.csv                     |

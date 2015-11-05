@@ -8,7 +8,7 @@ require_relative '../../convert/convert'
 require_relative '../../helpers/erb_helper'
 require_relative '../../processor/processor'
 
-BASE_DIR = File.join(File.dirname(__FILE__), '..', '..', '..', '..')
+BASE_DIR = File.join(File.dirname(__FILE__), '..', '..')
 TEMPLATE_DIR = File.join(BASE_DIR, 'templates')
 SCHEMA_TEMPLATE = File.join(TEMPLATE_DIR, 'schema.sql.erb')
 

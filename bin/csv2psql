@@ -1,8 +1,4 @@
 #! /usr/bin/env ruby
 
-require_relative '../lib/csv2psql/lib'
-require_relative '../lib/csv2psql/version'
-
 require_relative '../lib/csv2psql/cli/cli'
 
-Csv2Psql::Cli.main if __FILE__ == $PROGRAM_NAME

@@ -20,8 +20,6 @@ module Csv2Psql
   module Cli
     # CLI Application
     class App
-      extend Csv2Psql::Cli::Shared
-
       cmds = File.absolute_path(File.join(File.dirname(__FILE__), 'cmd'))
       Dir.glob(cmds + '/*.rb').each do |file|
         require file
@@ -34,4 +32,4 @@ module Csv2Psql
   end
 end
 
-launch if __FILE__ == $PROGRAM_NAME
+launch

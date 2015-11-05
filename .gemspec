@@ -23,18 +23,18 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
-  s.add_dependency 'gli', '~> 2.11', '>= 2.11.0'
-  s.add_dependency 'json_pure', '~> 1.8.1'
+  s.add_dependency 'gli', '~> 2.13', '>= 2.13.2'
+  s.add_dependency 'json_pure', '~> 1.8', '>= 1.8.3'
   s.add_dependency 'lru', '~> 0.1', '>= 0.1.0'
-  s.add_dependency 'multi_json', '~> 1.10.0'
-  s.add_dependency 'rake', '~> 10.3', '>= 10.3.2'
-  s.add_dependency 'terminal-table', '~> 1.4', '>= 1.4.5'
+  s.add_dependency 'multi_json', '~> 1.11', '>= 1.11.2'
+  s.add_dependency 'rake', '~> 10.4', '>= 10.4.2'
+  s.add_dependency 'terminal-table', '~> 1.5', '>= 1.5.2'
 
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4', '>= 0.4.0'
-  s.add_development_dependency 'coveralls', '~> 0.7', '>= 0.7.0r'
+  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4', '>= 0.4.8'
+  s.add_development_dependency 'coveralls', '~> 0.8', '>= 0.8.3'
   s.add_development_dependency "redcarpet", "~> 3.1.1" if RUBY_PLATFORM != 'java'
-  s.add_development_dependency 'rspec', '~> 3.0', '>= 3.0.0'
-  s.add_development_dependency 'rubocop', '~> 0.24', '>= 0.24.0'
-  s.add_development_dependency 'simplecov', '~> 0.8', '>= 0.8.2'
-  s.add_development_dependency 'yard', '~> 0.8.7.3'
+  s.add_development_dependency 'rspec', '~> 3.3', '>= 3.3.0'
+  s.add_development_dependency 'rubocop', '~> 0.34', '>= 0.34.2'
+  s.add_development_dependency 'simplecov', '~> 0.10', '>= 0.10.0'
+  s.add_development_dependency 'yard', '~> 0.8.7.6'
 end

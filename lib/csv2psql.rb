@@ -1,3 +1,3 @@
 # encoding: UTF-8
 
-require 'csv2psql/lib'
+require_relative 'csv2psql/lib'

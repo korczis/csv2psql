@@ -33,20 +33,13 @@ formats = {
   end
 }
 
-cmds = {
-  f: {
-    desc: 'Output format',
-    type: String,
-    default_value: formats.keys.first
-  }
-}
-
 desc 'Analyze csv file'
 command :analyze do |c|
-  c.flag [:f, :format], cmds[:f]
-
+  c.desc "Output format #{formats.keys.join(', ')}"
+  c.default_value(formats.keys.first)
+  c.flag [:f, :format]
   c.action do |global_options, options, args|
-    fail ArgumentError, 'No file to analyze specified' if args.empty?
+    help_now!('No file to analyze specified!') if args.empty?
 
     opts = {}.merge(global_options).merge(options)
 

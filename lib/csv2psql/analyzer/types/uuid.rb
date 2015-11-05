@@ -14,6 +14,8 @@ module Csv2Psql
 
       class << self
         def analyze(val)
+          return false
+
           match = val && val.match(RE)
           !match.nil?
         end

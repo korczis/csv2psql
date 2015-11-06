@@ -70,7 +70,11 @@ module Csv2Psql
           analyzer.analyze(path, data[:row], opts)
         end
 
-        res[path] = SchemaGenerator.generate(analyzer.files[path])
+        analysis = analyzer.files[path]
+        if analysis
+          res[path] = SchemaGenerator.generate(analysis)
+        end
+
       end
       res
     end

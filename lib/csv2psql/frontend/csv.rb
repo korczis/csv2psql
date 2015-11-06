@@ -10,7 +10,7 @@ module Csv2Psql
     # Csv frontend class
     class Csv < Base
       def open(path, open_opts = 'rt', csv_opts = {}, &_block)
-        CSV.open(path, open_opts, csv_opts) do |csv|
+        CSV.open(path, open_opts, csv_opts.merge(:col_sep => csv_opts[:delimiter] || csv_opts[:col_sep] || ',')) do |csv|
           Proc.new.call(csv)
         end
       end

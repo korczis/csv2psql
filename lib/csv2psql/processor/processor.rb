@@ -94,7 +94,9 @@ module Csv2Psql
         quote_char: opts['quote'] || DEFAULT_OPTIONS['quote']
       }
       res[:col_sep] = opts['delimiter'] if opts['delimiter']
+      res[:col_sep] = opts[:delimiter] if opts[:delimiter]
       res[:row_sep] = opts['separator'] if opts['separator']
+      res[:row_sep] = opts[:separator] if opts[:separator]
       res
     end
 

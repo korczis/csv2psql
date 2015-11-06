@@ -10,20 +10,34 @@ module Csv2Psql
       CLASS = :special
       WEIGHT = 5
 
-      BOOLEAN_VALUES = %w(true false 0 1)
-      BOOLEAN_VALUES_MAP = {}
-      BOOLEAN_VALUES.each do |k|
-        BOOLEAN_VALUES_MAP[k] = true
-      end
+      TRUE_VALUES = [
+        true,
+        't',
+        'true',
+        'y',
+        'yes',
+        'on',
+        '1',
+      ]
+      FALSE_VALUES = [
+        false,
+        'f',
+        'false',
+        'n',
+        'no',
+        'off',
+        '0'
+      ]
+      BOOLEAN_VALUES = TRUE_VALUES + FALSE_VALUES
 
       class << self
         def analyze(val)
-          return if val.nil? || val.empty?
-          BOOLEAN_VALUES_MAP.key?(val.downcase)
+          return false if val.nil? || val.empty?
+          BOOLEAN_VALUES.index(val) != nil
         end
 
         def convert(val)
-          val.to_i
+          val.downcase
         end
       end
     end

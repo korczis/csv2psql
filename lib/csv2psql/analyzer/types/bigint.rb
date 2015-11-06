@@ -14,7 +14,7 @@ module Csv2Psql
 
       class << self
         def analyze(val)
-          val.is_a?(Integer) || (val && RE.match(val))
+          val && RE.match(val)
         end
 
         def convert(val)

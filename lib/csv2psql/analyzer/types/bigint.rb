@@ -10,9 +10,11 @@ module Csv2Psql
       CLASS = :numeric
       WEIGHT = 4
 
+      RE = Regexp.new(/^\d+$/)
+
       class << self
         def analyze(val)
-          val.is_a?(Integer) || (val && !val.match(/^\d+$/).nil?)
+          val.is_a?(Integer) || (val && RE.match(val))
         end
 
         def convert(val)

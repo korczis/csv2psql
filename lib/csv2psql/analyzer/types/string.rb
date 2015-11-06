@@ -12,7 +12,7 @@ module Csv2Psql
 
       class << self
         def analyze(val)
-          val.is_a?(::String)
+          val.is_a?(::String) && !val.empty?
         end
       end
     end

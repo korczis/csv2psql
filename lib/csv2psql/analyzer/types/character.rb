@@ -6,7 +6,7 @@ module Csv2Psql
   module Analyzers
     # Character value matcher
     class Character < BaseAnalyzer
-      TYPE = :bigint
+      TYPE = :character
       CLASS = :character
       WEIGHT = 2
 

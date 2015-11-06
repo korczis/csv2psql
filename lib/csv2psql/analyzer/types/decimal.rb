@@ -9,12 +9,12 @@ module Csv2Psql
       TYPE = :decimal
       CLASS = :numeric
       WEIGHT = 3
-      RE = /^[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?$/
+      RE = Regexp.new(/^[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?$/)
 
       class << self
         def analyze(val)
           return true if val.is_a?(Float)
-          res = val && val.match(RE)
+          res = val && RE.match(val)
           !res.nil?
         end
 
